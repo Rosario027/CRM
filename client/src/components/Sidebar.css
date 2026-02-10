@@ -1,0 +1,114 @@
+/* Sidebar.css */
+.sidebar {
+    width: 260px;
+    height: 100vh;
+    background-color: #ffffff;
+    border-right: 1px solid #e2e8e5;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 100;
+    box-shadow: 4px 0 20px -10px rgba(0, 0, 0, 0.05);
+}
+
+.sidebar-header {
+    height: 70px;
+    display: flex;
+    align-items: center;
+    padding: 0 1.5rem;
+    border-bottom: 1px solid #f4f7f6;
+}
+
+.brand-icon {
+    color: #4a6b5d;
+    margin-right: 0.75rem;
+}
+
+.brand-name {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: #2c4a3e;
+    letter-spacing: -0.02em;
+}
+
+.sidebar-nav {
+    flex: 1;
+    padding: 1.5rem 1rem;
+    overflow-y: auto;
+}
+
+.sidebar-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    color: #5c7a6f;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+}
+
+.nav-link svg {
+    margin-right: 0.75rem;
+    opacity: 0.8;
+}
+
+.nav-link:hover {
+    background-color: #f4f7f6;
+    color: #2c4a3e;
+}
+
+.nav-link.active {
+    background-color: #e3ebe8;
+    /* Sage Green active state */
+    color: #2c4a3e;
+    font-weight: 600;
+}
+
+.nav-link.active svg {
+    opacity: 1;
+    color: #4a6b5d;
+}
+
+.sidebar-footer {
+    padding: 1.5rem;
+    border-top: 1px solid #f4f7f6;
+}
+
+.logout-button {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    background: none;
+    border: 1px solid #e2e8e5;
+    border-radius: 8px;
+    color: #7d968d;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+    font-size: 0.95rem;
+}
+
+.logout-button svg {
+    margin-right: 0.75rem;
+}
+
+.logout-button:hover {
+    background-color: #fdf2f2;
+    color: #dc2626;
+    border-color: #fee2e2;
+}
