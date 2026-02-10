@@ -42,47 +42,59 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
 
     return (
         <div className="login-container">
-            <div className="login-card">
-                <div className="icon-container">
-                    <Building2 size={32} className="login-icon" />
+            <div className="login-wrapper">
+                {/* Left Side - Brand/Hero */}
+                <div className="login-hero">
+                    <div className="hero-content">
+                        <div className="icon-container">
+                            <Building2 size={48} className="login-icon" />
+                        </div>
+                        <h1 className="hero-title">NEWERA</h1>
+                        <p className="hero-subtitle">Office Management System</p>
+                    </div>
                 </div>
 
-                <h1 className="login-title">NEWERA</h1>
-                <p className="login-subtitle">Office Management System</p>
-
-                <form onSubmit={handleSubmit} className="login-form">
-                    <div className="form-group">
-                        <input
-                            type="text"
-                            className="form-input"
-                            placeholder="Username (admin or user)"
-                            value={username}
-                            onChange={(e) => setUsername(e.target.value)}
-                            required
-                        />
+                {/* Right Side - Login Form */}
+                <div className="login-form-container">
+                    <div className="form-header">
+                        <h2>Welcome Back</h2>
+                        <p>Please sign in to your account</p>
                     </div>
 
-                    <div className="form-group">
-                        <input
-                            type="password"
-                            className="form-input"
-                            placeholder="Password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            required
-                        />
-                    </div>
+                    <form onSubmit={handleSubmit} className="login-form">
+                        <div className="form-group">
+                            <label htmlFor="username">Username</label>
+                            <input
+                                id="username"
+                                type="text"
+                                className="form-input"
+                                placeholder="Enter your username"
+                                value={username}
+                                onChange={(e) => setUsername(e.target.value)}
+                                required
+                            />
+                        </div>
 
-                    {error && <div className="error-message">{error}</div>}
+                        <div className="form-group">
+                            <label htmlFor="password">Password</label>
+                            <input
+                                id="password"
+                                type="password"
+                                className="form-input"
+                                placeholder="Enter your password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                required
+                            />
+                        </div>
 
-                    <button type="submit" className="login-button" disabled={loading}>
-                        {loading ? 'Signing In...' : 'Sign In'}
-                    </button>
+                        {error && <div className="error-message">{error}</div>}
 
-                    <div className="back-link">
-                        <a href="#">Back</a>
-                    </div>
-                </form>
+                        <button type="submit" className="login-button" disabled={loading}>
+                            {loading ? 'Signing In...' : 'Sign In'}
+                        </button>
+                    </form>
+                </div>
             </div>
         </div>
     );
