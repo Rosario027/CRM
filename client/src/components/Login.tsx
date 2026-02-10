@@ -47,8 +47,8 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
                     <Building2 size={32} className="login-icon" />
                 </div>
 
-                <h1 className="login-title">Welcome Back</h1>
-                <p className="login-subtitle">Enter your credentials to access your portal</p>
+                <h1 className="login-title">NEWERA</h1>
+                <p className="login-subtitle">Office Management System</p>
 
                 <form onSubmit={handleSubmit} className="login-form">
                     <div className="form-group">

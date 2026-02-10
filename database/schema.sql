@@ -1,17 +1,4 @@
--- Database Schema for Office Management App
-
--- Organizations
-CREATE TABLE IF NOT EXISTS organizations (
-  id SERIAL PRIMARY KEY,
-  name TEXT NOT NULL,
-  slug TEXT UNIQUE NOT NULL,
-  address TEXT,
-  phone TEXT,
-  email TEXT,
-  logo_url TEXT,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
+-- Database Schema for Office Management App (NEWERA)
 
 -- Users
 CREATE TABLE IF NOT EXISTS users (
@@ -24,7 +11,6 @@ CREATE TABLE IF NOT EXISTS users (
   role TEXT NOT NULL DEFAULT 'staff' CHECK (role IN ('admin', 'proprietor', 'staff')),
   department TEXT,
   title TEXT,
-  organization_id INTEGER REFERENCES organizations(id),
   is_active BOOLEAN DEFAULT TRUE,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -45,7 +31,6 @@ CREATE TABLE IF NOT EXISTS tasks (
   description TEXT,
   assigned_to_id INTEGER NOT NULL REFERENCES users(id),
   assigned_by_id INTEGER NOT NULL REFERENCES users(id),
-  organization_id INTEGER REFERENCES organizations(id),
   status TEXT NOT NULL DEFAULT 'pending' CHECK (status IN ('pending', 'in_progress', 'completed', 'reassigned')),
   priority TEXT NOT NULL DEFAULT 'medium' CHECK (priority IN ('low', 'medium', 'high', 'critical')),
   due_date TIMESTAMP,
@@ -65,7 +50,6 @@ CREATE TABLE IF NOT EXISTS attendance (
   check_out_time TIMESTAMP,
   work_hours DECIMAL(4, 2),
   notes TEXT,
-  organization_id INTEGER REFERENCES organizations(id),
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -81,7 +65,6 @@ CREATE TABLE IF NOT EXISTS leaves (
   status TEXT NOT NULL DEFAULT 'pending' CHECK (status IN ('pending', 'approved', 'rejected')),
   approved_by_id INTEGER REFERENCES users(id),
   approved_at TIMESTAMP,
-  organization_id INTEGER REFERENCES organizations(id),
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -97,7 +80,6 @@ CREATE TABLE IF NOT EXISTS expenses (
   receipt_url TEXT,
   approved_by_id INTEGER REFERENCES users(id),
   approved_at TIMESTAMP,
-  organization_id INTEGER REFERENCES organizations(id),
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -114,7 +96,17 @@ CREATE TABLE IF NOT EXISTS monthly_summaries (
   attendance_days INTEGER DEFAULT 0,
   leave_days INTEGER DEFAULT 0,
   total_expenses DECIMAL(10, 2) DEFAULT 0,
-  organization_id INTEGER REFERENCES organizations(id),
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+-- Seed Data (NEWERA)
+-- Insert Admin (admin/admin123)
+INSERT INTO users (email, password, first_name, last_name, role)
+VALUES ('admin', 'admin123', 'System', 'Admin', 'admin')
+ON CONFLICT (email) DO NOTHING;
+
+-- Insert User (user/user123)
+INSERT INTO users (email, password, first_name, last_name, role)
+VALUES ('user', 'user123', 'John', 'Doe', 'staff')
+ON CONFLICT (email) DO NOTHING;
