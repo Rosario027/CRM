@@ -57,7 +57,7 @@ app.post('/api/login', (req: Request, res: Response): void => {
 
 // The "catchall" handler: for any request that doesn't
 // match one above, send back React's index.html file.
-app.get('*', (req: Request, res: Response) => {
+app.get(/(.*)/, (req: Request, res: Response) => {
     res.sendFile(path.join(__dirname, '../../client/dist/index.html'));
 });
 
