@@ -1,0 +1,120 @@
+/* Dashboard.css */
+.dashboard-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.welcome-banner h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #1a2e26;
+    margin-bottom: 0.5rem;
+}
+
+.welcome-banner p {
+    color: #5c7a6f;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+}
+
+.stat-card {
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    transition: transform 0.2s;
+}
+
+.stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.stat-icon {
+    padding: 0.75rem;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.stat-icon.blue {
+    background-color: #eff6ff;
+    color: #3b82f6;
+}
+
+.stat-icon.green {
+    background-color: #f0fdf4;
+    color: #16a34a;
+}
+
+.stat-icon.purple {
+    background-color: #faf5ff;
+    color: #9333ea;
+}
+
+.stat-icon.orange {
+    background-color: #fff7ed;
+    color: #ea580c;
+}
+
+.stat-info h3 {
+    font-size: 0.875rem;
+    color: #6b7280;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+.stat-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 0.25rem;
+}
+
+.stat-trend {
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.stat-trend.positive {
+    color: #16a34a;
+}
+
+.stat-trend.negative {
+    color: #dc2626;
+}
+
+.stat-trend.neutral {
+    color: #6b7280;
+}
+
+.section-card {
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.section-card h3 {
+    font-size: 1.1rem;
+    color: #1a2e26;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #f3f4f6;
+    padding-bottom: 1rem;
+}
+
+.empty-state {
+    color: #9ca3af;
+    font-style: italic;
+    text-align: center;
+    padding: 2rem;
+}
