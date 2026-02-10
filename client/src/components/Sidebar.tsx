@@ -9,7 +9,8 @@ import {
     Receipt,
     Settings,
     LogOut,
-    Building2
+    Building2,
+    Briefcase
 } from 'lucide-react';
 
 import './Sidebar.css';
@@ -43,6 +44,15 @@ const Sidebar: React.FC<SidebarProps> = ({ userRole, onLogout }) => {
                             <NavLink to="/staff" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
                                 <Users size={20} />
                                 <span>Staff & Employees</span>
+                            </NavLink>
+                        </li>
+                    )}
+
+                    {isAdmin && (
+                        <li>
+                            <NavLink to="/clients" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
+                                <Briefcase size={20} />
+                                <span>Clients</span>
                             </NavLink>
                         </li>
                     )}

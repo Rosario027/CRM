@@ -29,7 +29,6 @@ const Dashboard: React.FC<DashboardProps> = ({ userRole }) => {
                     <div className="stat-info">
                         <h3>Total Tasks</h3>
                         <p className="stat-value">24</p>
-                        <span className="stat-trend positive">+12% this week</span>
                     </div>
                 </div>
 
@@ -40,7 +39,6 @@ const Dashboard: React.FC<DashboardProps> = ({ userRole }) => {
                     <div className="stat-info">
                         <h3>Pending Tasks</h3>
                         <p className="stat-value">8</p>
-                        <span className="stat-trend neutral">Same as last week</span>
                     </div>
                 </div>
 
@@ -53,7 +51,6 @@ const Dashboard: React.FC<DashboardProps> = ({ userRole }) => {
                             <div className="stat-info">
                                 <h3>Total Staff</h3>
                                 <p className="stat-value">12</p>
-                                <span className="stat-trend positive">+2 new hires</span>
                             </div>
                         </div>
 
@@ -63,8 +60,7 @@ const Dashboard: React.FC<DashboardProps> = ({ userRole }) => {
                             </div>
                             <div className="stat-info">
                                 <h3>Expenses</h3>
-                                <p className="stat-value">$1,240</p>
-                                <span className="stat-trend negative">+5% increase</span>
+                                <p className="stat-value">₹1,240</p>
                             </div>
                         </div>
                     </>

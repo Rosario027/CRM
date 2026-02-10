@@ -11,7 +11,6 @@ const TaskList: React.FC = () => {
     // Get current user
     const storedUser = localStorage.getItem('user');
     const user = storedUser ? JSON.parse(storedUser) : null;
-    const userRole = user?.role || 'staff';
 
     useEffect(() => {
         fetchTasks();
@@ -57,12 +56,10 @@ const TaskList: React.FC = () => {
                     <h1>Tasks</h1>
                     <p>Manage and track team tasks.</p>
                 </div>
-                {(userRole === 'admin' || userRole === 'proprietor') && (
-                    <button className="add-task-btn" onClick={() => setIsModalOpen(true)}>
-                        <Plus size={20} />
-                        New Task
-                    </button>
-                )}
+                <button className="add-task-btn" onClick={() => setIsModalOpen(true)}>
+                    <Plus size={20} />
+                    New Task
+                </button>
             </div>
 
             <div className="tasks-filter">

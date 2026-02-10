@@ -84,6 +84,19 @@ export const expenses = pgTable("expenses", {
     createdAt: timestamp("created_at").defaultNow(),
 });
 
+// === CLIENTS ===
+export const clients = pgTable("clients", {
+    id: serial("id").primaryKey(),
+    name: varchar("name", { length: 100 }).notNull(),
+    email: varchar("email", { length: 255 }).unique().notNull(),
+    phone: varchar("phone", { length: 20 }),
+    company: varchar("company", { length: 100 }),
+    address: text("address"),
+    status: text("status", { enum: ["active", "inactive"] }).default("active").notNull(),
+    createdAt: timestamp("created_at").defaultNow(),
+    updatedAt: timestamp("updated_at").defaultNow(),
+});
+
 // === MONTHLY SUMMARIES ===
 export const monthlySummaries = pgTable("monthly_summaries", {
     id: serial("id").primaryKey(),
