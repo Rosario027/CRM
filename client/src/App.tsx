@@ -1,5 +1,8 @@
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { useState } from 'react';
 import Login from './components/Login';
+import Dashboard from './components/Dashboard';
+import Layout from './components/Layout';
 import './App.css';
 
 function App() {
@@ -7,18 +10,31 @@ function App() {
 
   const handleLogin = (role: string) => {
     setUserRole(role);
+    // In a real app, we would save token to localStorage here
   };
 
-  if (!userRole) {
-    return <Login onLogin={handleLogin} />;
-  }
+  const handleLogout = () => {
+    setUserRole(null);
+  };
 
   return (
-    <div className="dashboard-container">
-      <h1>Welcome, {userRole === 'admin' ? 'Administrator' : 'Employee'}</h1>
-      <p>This is the main dashboard.</p>
-      <button onClick={() => setUserRole(null)}>Logout</button>
-    </div>
+    <Router>
+      <Routes>
+        <Route
+          path="/login"
+          element={!userRole ? <Login onLogin={handleLogin} /> : <Navigate to="/dashboard" />}
+        />
+
+        <Route
+          path="/"
+          element={userRole ? <Layout userRole={userRole} onLogout={handleLogout} /> : <Navigate to="/login" />}
+        >
+          <Route path="dashboard" element={<Dashboard userRole={userRole!} />} />
+          {/* Fallback to dashboard for now */}
+          <Route path="*" element={<Navigate to="/dashboard" />} />
+        </Route>
+      </Routes>
+    </Router>
   );
 }
 
