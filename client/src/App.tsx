@@ -3,6 +3,7 @@ import { useState } from 'react';
 import Login from './components/Login';
 import Dashboard from './components/Dashboard';
 import StaffList from './components/Staff/StaffList';
+import AttendanceDashboard from './components/Attendance/AttendanceDashboard';
 import Layout from './components/Layout';
 import './App.css';
 
@@ -32,6 +33,7 @@ function App() {
         >
           <Route path="dashboard" element={<Dashboard userRole={userRole!} />} />
           <Route path="staff" element={<StaffList />} />
+          <Route path="attendance" element={<AttendanceDashboard />} />
           {/* Fallback to dashboard for now */}
           <Route path="*" element={<Navigate to="/dashboard" />} />
         </Route>

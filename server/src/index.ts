@@ -35,6 +35,7 @@ pool.connect((err, client, release) => {
 app.use(express.static(path.join(__dirname, '../../client/dist')));
 
 import staffRoutes from './routes/staff';
+import attendanceRoutes from './routes/attendance';
 
 // API Routes
 app.get('/api', (req: Request, res: Response) => {
@@ -42,6 +43,7 @@ app.get('/api', (req: Request, res: Response) => {
 });
 
 app.use('/api/staff', staffRoutes);
+app.use('/api/attendance', attendanceRoutes);
 
 import { db, isDbConnected } from './db';
 import { users } from './db/schema';

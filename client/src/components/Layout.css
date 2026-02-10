@@ -2,6 +2,8 @@
 .app-layout {
     display: flex;
     min-height: 100vh;
+    width: 100%;
+    /* Ensure full width */
     background-color: #f4f7f6;
     /* Global background */
 }
