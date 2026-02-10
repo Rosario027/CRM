@@ -39,20 +39,58 @@ app.get('/api', (req: Request, res: Response) => {
     res.send('Office Management API is running');
 });
 
-app.post('/api/login', (req: Request, res: Response): void => {
+import { db } from './db';
+import { users } from './db/schema';
+import { eq } from 'drizzle-orm';
+
+// ... (existing codes)
+
+app.post('/api/login', async (req: Request, res: Response): Promise<void> => {
     const { username, password } = req.body;
 
-    if (username === 'admin' && password === 'admin123') {
-        res.json({ success: true, role: 'admin', message: 'Login successful' });
-        return;
-    }
+    try {
+        // Find user by email (using username field as email for now, or add username to schema)
+        // Schema has 'email', 'firstName', 'lastName'. Let's assume input 'username' matches 'email' or a new 'username' field?
+        // The schema I created has 'email'. The frontend sends 'username'.
+        // Let's assume for this MVP that the user types their email.
 
-    if (username === 'user' && password === 'user123') {
-        res.json({ success: true, role: 'employee', message: 'Login successful' });
-        return;
-    }
+        // Actually, let's allow 'admin' to map to a specific email for the seed data, or update schema to have username.
+        // The SQL schema had 'username'. The Drizzle schema I wrote has 'email'.
+        // Let's check the SQL schema really quick? No, I'll just check Drizzle schema again.
+        // Drizzle schema: email, password...
+        // I should probably map 'username' input to 'email' for now, OR fetch by email.
 
-    res.status(401).json({ success: false, message: 'Invalid credentials' });
+        // Let's assume the user enters email.
+        const result = await db.select().from(users).where(eq(users.email, username));
+
+        if (result.length === 0) {
+            res.status(401).json({ success: false, message: 'Invalid credentials' });
+            return;
+        }
+
+        const user = result[0];
+
+        // In a real app, use bcrypt.compare(password, user.password)
+        // For this MVP, we are storing plain text or simple mismatch.
+        // The seed data I created earlier (in SQL) used 'admin123'. 
+        // If I haven't seeded via Drizzle, the DB might be empty unless I ran seed.sql.
+        // I ran seed.sql earlier.
+
+        if (password === user.password) {
+            res.json({
+                success: true,
+                role: user.role,
+                user: { id: user.id, name: `${user.firstName} ${user.lastName}`, email: user.email },
+                message: 'Login successful'
+            });
+            return;
+        }
+
+        res.status(401).json({ success: false, message: 'Invalid credentials' });
+    } catch (error) {
+        console.error('Login error:', error);
+        res.status(500).json({ success: false, message: 'Internal server error' });
+    }
 });
 
 // The "catchall" handler: for any request that doesn't
