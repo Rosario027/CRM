@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { useState } from 'react';
 import Login from './components/Login';
 import Dashboard from './components/Dashboard';
+import StaffList from './components/Staff/StaffList';
 import Layout from './components/Layout';
 import './App.css';
 
@@ -30,6 +31,7 @@ function App() {
           element={userRole ? <Layout userRole={userRole} onLogout={handleLogout} /> : <Navigate to="/login" />}
         >
           <Route path="dashboard" element={<Dashboard userRole={userRole!} />} />
+          <Route path="staff" element={<StaffList />} />
           {/* Fallback to dashboard for now */}
           <Route path="*" element={<Navigate to="/dashboard" />} />
         </Route>

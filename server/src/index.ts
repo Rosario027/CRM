@@ -34,10 +34,14 @@ pool.connect((err, client, release) => {
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, '../../client/dist')));
 
+import staffRoutes from './routes/staff';
+
 // API Routes
 app.get('/api', (req: Request, res: Response) => {
     res.send('Office Management API is running');
 });
+
+app.use('/api/staff', staffRoutes);
 
 import { db, isDbConnected } from './db';
 import { users } from './db/schema';
