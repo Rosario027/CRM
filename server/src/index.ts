@@ -36,6 +36,9 @@ app.use(express.static(path.join(__dirname, '../../client/dist')));
 
 import staffRoutes from './routes/staff';
 import attendanceRoutes from './routes/attendance';
+import taskRoutes from './routes/tasks';
+import leaveRoutes from './routes/leaves';
+import expenseRoutes from './routes/expenses';
 
 // API Routes
 app.get('/api', (req: Request, res: Response) => {
@@ -44,6 +47,9 @@ app.get('/api', (req: Request, res: Response) => {
 
 app.use('/api/staff', staffRoutes);
 app.use('/api/attendance', attendanceRoutes);
+app.use('/api/tasks', taskRoutes);
+app.use('/api/leaves', leaveRoutes);
+app.use('/api/expenses', expenseRoutes);
 
 import { db, isDbConnected } from './db';
 import { users } from './db/schema';

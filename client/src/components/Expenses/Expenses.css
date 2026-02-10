@@ -1,0 +1,104 @@
+/* Expenses.css */
+.expenses-container {
+    padding: 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.expenses-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.expenses-header h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #1a2e26;
+    margin: 0;
+}
+
+.expenses-header p {
+    color: #5c7a6f;
+    margin: 0.5rem 0 0;
+}
+
+.add-expense-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: #10b981;
+    color: white;
+    padding: 0.75rem 1.25rem;
+    border-radius: 8px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.add-expense-btn:hover {
+    background-color: #059669;
+    transform: translateY(-1px);
+}
+
+.expenses-grid {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 2rem;
+}
+
+.expenses-list {
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+}
+
+.expenses-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.expenses-table th {
+    text-align: left;
+    padding: 1rem 1.5rem;
+    background-color: #f8fafc;
+    color: #64748b;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.expenses-table td {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid #f1f5f9;
+    color: #334155;
+    font-size: 0.95rem;
+}
+
+.expenses-table tr:last-child td {
+    border-bottom: none;
+}
+
+.category-badge {
+    padding: 0.25rem 0.6rem;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    background-color: #f3f4f6;
+    color: #4b5563;
+    text-transform: capitalize;
+}
+
+.amount {
+    font-weight: 600;
+    color: #1f2937;
+}
+
+.expense-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}

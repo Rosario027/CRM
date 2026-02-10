@@ -4,6 +4,9 @@ import Login from './components/Login';
 import Dashboard from './components/Dashboard';
 import StaffList from './components/Staff/StaffList';
 import AttendanceDashboard from './components/Attendance/AttendanceDashboard';
+import TaskList from './components/Tasks/TaskList';
+import LeaveDashboard from './components/Leaves/LeaveDashboard';
+import ExpenseDashboard from './components/Expenses/ExpenseDashboard';
 import Layout from './components/Layout';
 import './App.css';
 
@@ -34,6 +37,9 @@ function App() {
           <Route path="dashboard" element={<Dashboard userRole={userRole!} />} />
           <Route path="staff" element={<StaffList />} />
           <Route path="attendance" element={<AttendanceDashboard />} />
+          <Route path="tasks" element={<TaskList />} />
+          <Route path="leaves" element={<LeaveDashboard />} />
+          <Route path="expenses" element={<ExpenseDashboard />} />
           {/* Fallback to dashboard for now */}
           <Route path="*" element={<Navigate to="/dashboard" />} />
         </Route>
