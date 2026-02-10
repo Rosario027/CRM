@@ -3,18 +3,22 @@
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background-color: #f0f2f5;
-  font-family: 'Inter', sans-serif;
+  background: linear-gradient(135deg, #f0f2f5 0%, #e2e8f0 100%);
+  font-family: 'Segoe UI', 'Inter', sans-serif;
+  /* Windows font preference */
 }
 
 .login-card {
   background-color: white;
-  padding: 2.5rem;
-  border-radius: 12px;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  padding: 3.5rem;
+  border-radius: 8px;
+  /* Sharper corners for Windows look */
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
   width: 100%;
-  max-width: 400px;
+  max-width: 480px;
+  /* Wider for desktop */
   text-align: center;
+  border: 1px solid #e5e7eb;
 }
 
 .icon-container {
@@ -64,7 +68,8 @@
   color: #374151;
   background-color: #f9fafb;
   transition: border-color 0.2s, box-shadow 0.2s;
-  box-sizing: border-box; /* Ensure padding doesn't affect width */
+  box-sizing: border-box;
+  /* Ensure padding doesn't affect width */
 }
 
 .form-input:focus {
