@@ -1,13 +1,5 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import {
-    rxDashboard,
-    rxPerson,
-    rxCalendar,
-    rxClipboardList,
-    rxFileText,
-    rxGear
-} from 'react-icons/rx'; // Using Radix Icons for typical dashboard look
 // Or Lucide (already installed)
 import {
     LayoutDashboard,
