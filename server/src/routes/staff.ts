@@ -15,6 +15,7 @@ router.get('/', async (req: Request, res: Response) => {
             lastName: users.lastName,
             email: users.email,
             employeeId: users.employeeId,
+            username: users.username,
             role: users.role,
             department: users.department,
             title: users.title,
@@ -33,7 +34,7 @@ router.get('/', async (req: Request, res: Response) => {
 
 // POST /api/staff - Create a new staff member
 router.post('/', async (req: Request, res: Response): Promise<void> => {
-    const { firstName, lastName, email, role, department, title, password, employeeId } = req.body;
+    const { firstName, lastName, email, role, department, title, password, employeeId, username } = req.body;
 
     if (!firstName || !lastName || !email || !password || !employeeId) {
         res.status(400).json({ success: false, message: 'Missing required fields: firstName, lastName, email, password, employeeId' });
@@ -68,6 +69,7 @@ router.post('/', async (req: Request, res: Response): Promise<void> => {
             lastName,
             email,
             password, // TODO: Hash this
+            username: username || firstName, // Default username to firstName
             role: role || 'staff',
             department,
             title,

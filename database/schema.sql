@@ -8,6 +8,7 @@ CREATE TABLE IF NOT EXISTS users (
   first_name VARCHAR(100) NOT NULL,
   last_name VARCHAR(100) NOT NULL,
   employee_id VARCHAR(50) UNIQUE,
+  username VARCHAR(100) UNIQUE,
   profile_image_url TEXT,
   role TEXT NOT NULL DEFAULT 'staff' CHECK (role IN ('admin', 'proprietor', 'staff')),
   department TEXT,

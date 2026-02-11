@@ -17,15 +17,28 @@ const AddStaffModal: React.FC<AddStaffModalProps> = ({ isOpen, onClose, onAdd })
         role: 'staff',
         title: '',
         password: 'password123', // Default password for now
-        employeeId: ''
+        employeeId: '',
+        username: ''
     });
+    const [usernameManuallyEdited, setUsernameManuallyEdited] = useState(false);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
     if (!isOpen) return null;
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
+        const { name, value } = e.target;
+        const updated = { ...formData, [name]: value };
+
+        // Auto-set username to firstName if not manually edited
+        if (name === 'firstName' && !usernameManuallyEdited) {
+            updated.username = value;
+        }
+        if (name === 'username') {
+            setUsernameManuallyEdited(value !== '');
+        }
+
+        setFormData(updated);
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -44,8 +57,10 @@ const AddStaffModal: React.FC<AddStaffModalProps> = ({ isOpen, onClose, onAdd })
                 role: 'staff',
                 title: '',
                 password: 'password123',
-                employeeId: ''
+                employeeId: '',
+                username: ''
             });
+            setUsernameManuallyEdited(false);
         } catch (error: any) {
             console.error('Error adding staff:', error);
             setError(error.message || 'Failed to add employee. Please try again.');
@@ -106,6 +121,18 @@ const AddStaffModal: React.FC<AddStaffModalProps> = ({ isOpen, onClose, onAdd })
                                 required
                             />
                         </div>
+                    </div>
+
+                    <div className="form-group">
+                        <label>Username</label>
+                        <input
+                            type="text"
+                            name="username"
+                            className="form-input"
+                            value={formData.username}
+                            onChange={handleChange}
+                            placeholder="Auto-filled from First Name"
+                        />
                     </div>
 
                     <div className="form-group">
