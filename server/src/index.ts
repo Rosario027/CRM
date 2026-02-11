@@ -63,6 +63,7 @@ import leaveRoutes from './routes/leaves';
 import expenseRoutes from './routes/expenses';
 import clientRoutes from './routes/clients';
 import dashboardRoutes from './routes/dashboard';
+import productRoutes from './routes/products';
 import debugRoutes from './routes/debug';
 
 // API Routes
@@ -77,6 +78,7 @@ app.use('/api/leaves', leaveRoutes);
 app.use('/api/expenses', expenseRoutes);
 app.use('/api/clients', clientRoutes);
 app.use('/api/dashboard', dashboardRoutes);
+app.use('/api/products', productRoutes);
 app.use('/api/debug', debugRoutes);
 
 import { db, isDbConnected } from './db';

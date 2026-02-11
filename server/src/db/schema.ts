@@ -116,6 +116,24 @@ export const monthlySummaries = pgTable("monthly_summaries", {
     updatedAt: timestamp("updated_at").defaultNow(),
 });
 
+// === INSURANCE PRODUCTS ===
+export const products = pgTable("products", {
+    id: serial("id").primaryKey(),
+    name: varchar("name", { length: 200 }).notNull(),
+    category: text("category", { enum: ["life", "health", "motor", "travel", "home", "business"] }).notNull(),
+    description: text("description").notNull(),
+    shortDescription: text("short_description"),
+    premiumStarting: decimal("premium_starting", { precision: 10, scale: 2 }).notNull(),
+    coverageAmount: decimal("coverage_amount", { precision: 12, scale: 2 }).notNull(),
+    duration: varchar("duration", { length: 50 }),
+    features: text("features"), // JSON string of feature list
+    terms: text("terms"),
+    isActive: boolean("is_active").default(true),
+    createdById: integer("created_by_id").references(() => users.id),
+    createdAt: timestamp("created_at").defaultNow(),
+    updatedAt: timestamp("updated_at").defaultNow(),
+});
+
 // === RELATIONS ===
 export const usersRelations = relations(users, ({ many }) => ({
     assignedTasks: many(tasks, { relationName: "assignee" }),
@@ -124,6 +142,7 @@ export const usersRelations = relations(users, ({ many }) => ({
     leaves: many(leaves),
     expenses: many(expenses),
     monthlySummaries: many(monthlySummaries),
+    createdProducts: many(products),
 }));
 
 export const tasksRelations = relations(tasks, ({ one }) => ({

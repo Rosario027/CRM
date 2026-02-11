@@ -10,7 +10,8 @@ import {
     Settings,
     LogOut,
     Building2,
-    Briefcase
+    Briefcase,
+    ShieldCheck
 } from 'lucide-react';
 
 import './Sidebar.css';
@@ -76,6 +77,13 @@ const Sidebar: React.FC<SidebarProps> = ({ userRole, onLogout }) => {
                         <NavLink to="/expenses" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
                             <Receipt size={20} />
                             <span>Expenses</span>
+                        </NavLink>
+                    </li>
+
+                    <li>
+                        <NavLink to="/products" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
+                            <ShieldCheck size={20} />
+                            <span>Our Products</span>
                         </NavLink>
                     </li>
 

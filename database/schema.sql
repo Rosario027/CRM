@@ -115,6 +115,24 @@ CREATE TABLE IF NOT EXISTS clients (
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+-- Insurance Products
+CREATE TABLE IF NOT EXISTS products (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(200) NOT NULL,
+  category TEXT NOT NULL CHECK (category IN ('life', 'health', 'motor', 'travel', 'home', 'business')),
+  description TEXT NOT NULL,
+  short_description TEXT,
+  premium_starting DECIMAL(10, 2) NOT NULL,
+  coverage_amount DECIMAL(12, 2) NOT NULL,
+  duration VARCHAR(50),
+  features TEXT,
+  terms TEXT,
+  is_active BOOLEAN DEFAULT TRUE,
+  created_by_id INTEGER REFERENCES users(id),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
 -- Seed Data (NEWERA)
 -- Insert Admin (admin/admin123)
 INSERT INTO users (email, password, first_name, last_name, role)

@@ -8,6 +8,7 @@ import TaskList from './components/Tasks/TaskList';
 import LeaveDashboard from './components/Leaves/LeaveDashboard';
 import ExpenseDashboard from './components/Expenses/ExpenseDashboard';
 import ClientList from './components/Clients/ClientList';
+import ProductCatalog from './components/Products/ProductCatalog';
 import Layout from './components/Layout';
 import './App.css';
 import './components/Modal.css';
@@ -45,6 +46,7 @@ function App() {
           <Route path="leaves" element={<LeaveDashboard />} />
           <Route path="expenses" element={<ExpenseDashboard />} />
           <Route path="clients" element={<ClientList />} />
+          <Route path="products" element={<ProductCatalog userRole={userRole!} />} />
           {/* Fallback to dashboard for now */}
           <Route path="*" element={<Navigate to="/dashboard" />} />
         </Route>
