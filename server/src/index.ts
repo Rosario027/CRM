@@ -40,6 +40,7 @@ import taskRoutes from './routes/tasks';
 import leaveRoutes from './routes/leaves';
 import expenseRoutes from './routes/expenses';
 import clientRoutes from './routes/clients';
+import dashboardRoutes from './routes/dashboard';
 
 // API Routes
 app.get('/api', (req: Request, res: Response) => {
@@ -52,6 +53,7 @@ app.use('/api/tasks', taskRoutes);
 app.use('/api/leaves', leaveRoutes);
 app.use('/api/expenses', expenseRoutes);
 app.use('/api/clients', clientRoutes);
+app.use('/api/dashboard', dashboardRoutes);
 
 import { db, isDbConnected } from './db';
 import { users } from './db/schema';

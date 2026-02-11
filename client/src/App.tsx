@@ -13,15 +13,17 @@ import './App.css';
 import './components/Modal.css';
 
 function App() {
-  const [userRole, setUserRole] = useState<string | null>(null);
+  const [userRole, setUserRole] = useState<string | null>(localStorage.getItem('userRole'));
 
   const handleLogin = (role: string) => {
     setUserRole(role);
-    // In a real app, we would save token to localStorage here
+    localStorage.setItem('userRole', role);
   };
 
   const handleLogout = () => {
     setUserRole(null);
+    localStorage.removeItem('userRole');
+    localStorage.removeItem('user');
   };
 
   return (

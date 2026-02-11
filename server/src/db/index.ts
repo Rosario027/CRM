@@ -14,17 +14,22 @@ if (!connectionString) {
     console.warn("WARNING: DATABASE_URL is not set. Database features will be disabled.");
 }
 
-const client = new pg.Client({
+// Use connection pool for better performance
+const pool = new pg.Pool({
     connectionString: connectionString || "postgres://dummy:dummy@localhost:5432/dummy",
+    max: 20, // Max clients in the pool
+    idleTimeoutMillis: 30000,
+    connectionTimeoutMillis: 2000,
 });
 
-// Connect to the database
-client.connect().then(() => {
-    console.log("Connected to PostgreSQL database");
+// Test connection
+pool.connect().then((client) => {
+    console.log("Connected to PostgreSQL database (Pool)");
     isDbConnected = true;
+    client.release();
 }).catch((err) => {
     console.warn("Failed to connect to database. App will run in offline mode.", err.message);
     isDbConnected = false;
 });
 
-export const db = drizzle(client, { schema });
+export const db = drizzle(pool, { schema });
