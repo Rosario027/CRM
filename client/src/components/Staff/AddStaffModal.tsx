@@ -51,7 +51,7 @@ const AddStaffModal: React.FC<AddStaffModalProps> = ({ isOpen, onClose, onAdd })
 
     return (
         <div className="modal-overlay">
-            <div className="modal-content">
+            <div className="modal-container">
                 <div className="modal-header">
                     <h2>Add New Employee</h2>
                     <button className="close-btn" onClick={onClose}>

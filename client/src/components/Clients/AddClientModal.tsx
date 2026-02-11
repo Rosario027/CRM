@@ -13,6 +13,7 @@ const AddClientModal: React.FC<AddClientModalProps> = ({ isOpen, onClose, onSucc
     const [phone, setPhone] = useState('');
     const [company, setCompany] = useState('');
     const [address, setAddress] = useState('');
+    const [status, setStatus] = useState('lead');
     const [loading, setLoading] = useState(false);
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -28,7 +29,8 @@ const AddClientModal: React.FC<AddClientModalProps> = ({ isOpen, onClose, onSucc
                     email,
                     phone,
                     company,
-                    address
+                    address,
+                    status
                 }),
             });
 
@@ -42,6 +44,7 @@ const AddClientModal: React.FC<AddClientModalProps> = ({ isOpen, onClose, onSucc
                 setPhone('');
                 setCompany('');
                 setAddress('');
+                setStatus('lead');
             } else {
                 alert(data.message);
             }
@@ -99,14 +102,29 @@ const AddClientModal: React.FC<AddClientModalProps> = ({ isOpen, onClose, onSucc
                         </div>
                     </div>
 
-                    <div className="form-group">
-                        <label>Company / Organization</label>
-                        <input
-                            type="text"
-                            value={company}
-                            onChange={(e) => setCompany(e.target.value)}
-                            placeholder="Acme Corp"
-                        />
+                    <div className="form-row">
+                        <div className="form-group">
+                            <label>Company / Organization</label>
+                            <input
+                                type="text"
+                                value={company}
+                                onChange={(e) => setCompany(e.target.value)}
+                                placeholder="Acme Corp"
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label>Status</label>
+                            <select
+                                value={status}
+                                onChange={(e) => setStatus(e.target.value)}
+                            >
+                                <option value="lead">Lead (To be converted)</option>
+                                <option value="pitch">Awaiting Pitch</option>
+                                <option value="active">Active</option>
+                                <option value="renewal">Renewal Due</option>
+                                <option value="inactive">Inactive</option>
+                            </select>
+                        </div>
                     </div>
 
                     <div className="form-group">

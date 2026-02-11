@@ -10,6 +10,7 @@ import ExpenseDashboard from './components/Expenses/ExpenseDashboard';
 import ClientList from './components/Clients/ClientList';
 import Layout from './components/Layout';
 import './App.css';
+import './components/Modal.css';
 
 function App() {
   const [userRole, setUserRole] = useState<string | null>(null);

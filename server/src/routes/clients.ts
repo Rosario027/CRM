@@ -32,7 +32,7 @@ router.post('/', async (req: Request, res: Response): Promise<void> => {
             phone,
             company,
             address,
-            status: 'active'
+            status: (req.body.status as any) || 'lead'
         }).returning();
 
         res.status(201).json({ success: true, data: newClient[0], message: 'Client added successfully' });

@@ -6,6 +6,7 @@ import './Clients.css';
 const ClientList: React.FC = () => {
     const [clients, setClients] = useState<any[]>([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [filterStatus, setFilterStatus] = useState<string | null>(null);
 
     // Get current user to check permissions
     const storedUser = localStorage.getItem('user');
@@ -47,6 +48,19 @@ const ClientList: React.FC = () => {
         }
     };
 
+    // Calculate counts
+    const counts = {
+        active: clients.filter(c => c.status === 'active').length,
+        renewal: clients.filter(c => c.status === 'renewal').length,
+        lead: clients.filter(c => c.status === 'lead').length,
+        pitch: clients.filter(c => c.status === 'pitch').length,
+        inactive: clients.filter(c => c.status === 'inactive').length
+    };
+
+    const filteredClients = filterStatus
+        ? clients.filter(c => c.status === filterStatus)
+        : clients;
+
     if (!isAdmin) {
         return <div className="clients-container"><p>Access Denied. Admins only.</p></div>;
     }
@@ -64,6 +78,49 @@ const ClientList: React.FC = () => {
                 </button>
             </div>
 
+            <div className="clients-summary-cards">
+                <div
+                    className={`summary-card status-active ${filterStatus === 'active' ? 'active-filter' : ''}`}
+                    onClick={() => setFilterStatus(filterStatus === 'active' ? null : 'active')}
+                >
+                    <div className="count">{counts.active}</div>
+                    <h3>Active Clients</h3>
+                    <div className="label">Currently engaged</div>
+                </div>
+                <div
+                    className={`summary-card status-renewal ${filterStatus === 'renewal' ? 'active-filter' : ''}`}
+                    onClick={() => setFilterStatus(filterStatus === 'renewal' ? null : 'renewal')}
+                >
+                    <div className="count">{counts.renewal}</div>
+                    <h3>Renewal Due</h3>
+                    <div className="label">Follow up required</div>
+                </div>
+                <div
+                    className={`summary-card status-lead ${filterStatus === 'lead' ? 'active-filter' : ''}`}
+                    onClick={() => setFilterStatus(filterStatus === 'lead' ? null : 'lead')}
+                >
+                    <div className="count">{counts.lead}</div>
+                    <h3>New Leads</h3>
+                    <div className="label">To be converted</div>
+                </div>
+                <div
+                    className={`summary-card status-pitch ${filterStatus === 'pitch' ? 'active-filter' : ''}`}
+                    onClick={() => setFilterStatus(filterStatus === 'pitch' ? null : 'pitch')}
+                >
+                    <div className="count">{counts.pitch}</div>
+                    <h3>Awaiting Pitch</h3>
+                    <div className="label">Business proposal sent</div>
+                </div>
+                <div
+                    className={`summary-card status-inactive ${filterStatus === 'inactive' ? 'active-filter' : ''}`}
+                    onClick={() => setFilterStatus(filterStatus === 'inactive' ? null : 'inactive')}
+                >
+                    <div className="count">{counts.inactive}</div>
+                    <h3>Inactive</h3>
+                    <div className="label">Previous clients</div>
+                </div>
+            </div>
+
             <div className="clients-grid">
                 <table className="clients-table">
                     <thead>
@@ -77,7 +134,7 @@ const ClientList: React.FC = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {clients.map((client) => (
+                        {filteredClients.map((client) => (
                             <tr key={client.id}>
                                 <td>
                                     <strong>{client.name}</strong>
@@ -121,10 +178,12 @@ const ClientList: React.FC = () => {
                                 </td>
                             </tr>
                         ))}
-                        {clients.length === 0 && (
+                        {filteredClients.length === 0 && (
                             <tr>
                                 <td colSpan={6} style={{ textAlign: 'center', padding: '2rem' }}>
-                                    No clients found. Add one to get started.
+                                    {filterStatus
+                                        ? `No clients found with status "${filterStatus}".`
+                                        : "No clients found. Add one to get started."}
                                 </td>
                             </tr>
                         )}

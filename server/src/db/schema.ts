@@ -92,7 +92,7 @@ export const clients = pgTable("clients", {
     phone: varchar("phone", { length: 20 }),
     company: varchar("company", { length: 100 }),
     address: text("address"),
-    status: text("status", { enum: ["active", "inactive"] }).default("active").notNull(),
+    status: text("status", { enum: ["active", "renewal", "lead", "pitch", "inactive"] }).default("lead").notNull(),
     createdAt: timestamp("created_at").defaultNow(),
     updatedAt: timestamp("updated_at").defaultNow(),
 });
