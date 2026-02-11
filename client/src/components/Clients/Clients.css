@@ -111,3 +111,88 @@
 .client-actions button:hover {
     background-color: #fee2e2;
 }
+
+/* Summary Cards */
+.clients-summary-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.summary-card {
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    border: 1px solid #f1f5f9;
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+}
+
+.summary-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.summary-card.active-filter {
+    border-color: #10b981;
+    background-color: #f0fdf4;
+}
+
+.summary-card h3 {
+    font-size: 0.9rem;
+    color: #64748b;
+    margin: 0 0 0.5rem 0;
+    font-weight: 600;
+}
+
+.summary-card .count {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1a2e26;
+    margin: 0;
+}
+
+.summary-card .label {
+    font-size: 0.8rem;
+    color: #94a3b8;
+    margin-top: 0.25rem;
+}
+
+/* Status colors for cards */
+.summary-card.status-active .count {
+    color: #10b981;
+}
+
+.summary-card.status-renewal .count {
+    color: #f59e0b;
+}
+
+.summary-card.status-lead .count {
+    color: #3b82f6;
+}
+
+.summary-card.status-pitch .count {
+    color: #8b5cf6;
+}
+
+.summary-card.status-inactive .count {
+    color: #94a3b8;
+}
+
+/* Status Badges */
+.status-badge.renewal {
+    background-color: #fff7ed;
+    color: #c2410c;
+}
+
+.status-badge.lead {
+    background-color: #eff6ff;
+    color: #1d4ed8;
+}
+
+.status-badge.pitch {
+    background-color: #f5f3ff;
+    color: #7c3aed;
+}
