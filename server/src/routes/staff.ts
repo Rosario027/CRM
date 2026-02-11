@@ -69,9 +69,14 @@ router.post('/', async (req: Request, res: Response): Promise<void> => {
         });
 
         res.status(201).json({ success: true, data: newUser[0], message: 'Staff member added successfully' });
-    } catch (error) {
+    } catch (error: any) {
         console.error('Error creating staff:', error);
-        res.status(500).json({ success: false, message: 'Failed to create staff member' });
+        console.error('Error details:', error.detail || error.message || error.code); // Log DB error details
+        res.status(500).json({
+            success: false,
+            message: 'Failed to create staff member',
+            error: error.message // Send specific error to client for debugging
+        });
     }
 });
 
