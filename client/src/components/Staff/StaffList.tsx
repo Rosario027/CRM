@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Plus } from 'lucide-react';
+import { Plus, Trash2 } from 'lucide-react';
 import AddStaffModal from './AddStaffModal';
 import './Staff.css';
 
@@ -18,6 +18,10 @@ const StaffList: React.FC = () => {
     const [staff, setStaff] = useState<StaffMember[]>([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [loading, setLoading] = useState(true);
+
+    // Get current user role
+    const userRole = localStorage.getItem('userRole') || '';
+    const isAdmin = ['admin', 'proprietor'].includes(userRole.toLowerCase());
 
     const fetchStaff = async () => {
         try {
@@ -65,6 +69,23 @@ const StaffList: React.FC = () => {
         }
     };
 
+    const handleDelete = async (id: number, name: string) => {
+        if (!confirm(`Are you sure you want to delete "${name}"? This action cannot be undone.`)) return;
+
+        try {
+            const res = await fetch(`/api/staff/${id}`, { method: 'DELETE' });
+            const data = await res.json();
+            if (data.success) {
+                fetchStaff();
+            } else {
+                alert(data.message || 'Failed to delete staff member');
+            }
+        } catch (error) {
+            console.error('Failed to delete staff:', error);
+            alert('Failed to delete staff member. Please try again.');
+        }
+    };
+
     return (
         <div className="staff-container">
             <div className="staff-header">
@@ -85,16 +106,17 @@ const StaffList: React.FC = () => {
                             <th>Job Title</th>
                             <th>Email</th>
                             <th>Status</th>
+                            {isAdmin && <th>Actions</th>}
                         </tr>
                     </thead>
                     <tbody>
                         {loading ? (
                             <tr>
-                                <td colSpan={6} style={{ textAlign: 'center', padding: '2rem' }}>Loading...</td>
+                                <td colSpan={isAdmin ? 7 : 6} style={{ textAlign: 'center', padding: '2rem' }}>Loading...</td>
                             </tr>
                         ) : staff.length === 0 ? (
                             <tr>
-                                <td colSpan={6} style={{ textAlign: 'center', padding: '2rem' }}>No staff members found.</td>
+                                <td colSpan={isAdmin ? 7 : 6} style={{ textAlign: 'center', padding: '2rem' }}>No staff members found.</td>
                             </tr>
                         ) : (
                             staff.map((member) => (
@@ -114,6 +136,21 @@ const StaffList: React.FC = () => {
                                             <span>{member.isActive ? 'Active' : 'Inactive'}</span>
                                         </div>
                                     </td>
+                                    {isAdmin && (
+                                        <td>
+                                            {member.role !== 'admin' && member.email !== 'admin' ? (
+                                                <button
+                                                    className="staff-delete-btn"
+                                                    onClick={() => handleDelete(member.id, `${member.firstName} ${member.lastName}`)}
+                                                    title="Delete staff member"
+                                                >
+                                                    <Trash2 size={16} />
+                                                </button>
+                                            ) : (
+                                                <span className="admin-protected">Protected</span>
+                                            )}
+                                        </td>
+                                    )}
                                 </tr>
                             ))
                         )}

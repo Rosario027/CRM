@@ -95,4 +95,28 @@ router.post('/', async (req: Request, res: Response): Promise<void> => {
     }
 });
 
+// DELETE /api/staff/:id - Delete a staff member (admin only)
+router.delete('/:id', async (req: Request, res: Response): Promise<void> => {
+    const id = parseInt(req.params.id as string);
+
+    try {
+        // Prevent deleting admin accounts
+        const user = await db.select({ role: users.role, email: users.email }).from(users).where(eq(users.id, id));
+        if (user.length === 0) {
+            res.status(404).json({ success: false, message: 'Staff member not found' });
+            return;
+        }
+        if (user[0].role === 'admin' || user[0].email === 'admin') {
+            res.status(403).json({ success: false, message: 'Cannot delete admin accounts' });
+            return;
+        }
+
+        await db.delete(users).where(eq(users.id, id));
+        res.json({ success: true, message: 'Staff member deleted successfully' });
+    } catch (error) {
+        console.error('Error deleting staff:', error);
+        res.status(500).json({ success: false, message: 'Failed to delete staff member' });
+    }
+});
+
 export default router;

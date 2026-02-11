@@ -138,3 +138,27 @@
         opacity: 1;
     }
 }
+
+/* Staff Delete Button */
+.staff-delete-btn {
+    background: none;
+    border: 1px solid #fecaca;
+    color: #ef4444;
+    border-radius: 8px;
+    padding: 0.4rem 0.6rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    transition: all 0.15s;
+}
+
+.staff-delete-btn:hover {
+    background: #fef2f2;
+    border-color: #ef4444;
+}
+
+.admin-protected {
+    font-size: 0.75rem;
+    color: #94a3b8;
+    font-style: italic;
+}
