@@ -39,6 +39,15 @@ const TaskModal: React.FC<TaskModalProps> = ({ isOpen, onClose, onSuccess, curre
         e.preventDefault();
         setLoading(true);
 
+        const resolvedAssignedToId = assignedToId === 'self' ? currentUser?.id : parseInt(assignedToId);
+        const resolvedAssignedById = currentUser?.id || 1; // Fallback to 1 (admin)
+
+        if (!resolvedAssignedToId || !resolvedAssignedById) {
+            alert('Could not determine user. Please log out and log back in.');
+            setLoading(false);
+            return;
+        }
+
         try {
             const res = await fetch('/api/tasks', {
                 method: 'POST',
@@ -48,8 +57,8 @@ const TaskModal: React.FC<TaskModalProps> = ({ isOpen, onClose, onSuccess, curre
                     description,
                     priority,
                     dueDate,
-                    assignedToId: parseInt(assignedToId),
-                    assignedById: currentUser.id
+                    assignedToId: resolvedAssignedToId,
+                    assignedById: resolvedAssignedById
                 }),
             });
 
@@ -117,11 +126,14 @@ const TaskModal: React.FC<TaskModalProps> = ({ isOpen, onClose, onSuccess, curre
                                 required
                             >
                                 <option value="">Select Staff</option>
-                                {staffList.map(staff => (
-                                    <option key={staff.id} value={staff.id}>
-                                        {staff.firstName} {staff.lastName}
-                                    </option>
-                                ))}
+                                <option value="self">Self (Me)</option>
+                                {staffList
+                                    .filter(staff => staff.id !== currentUser?.id)
+                                    .map(staff => (
+                                        <option key={staff.id} value={staff.id}>
+                                            {staff.firstName} {staff.lastName}
+                                        </option>
+                                    ))}
                             </select>
                         </div>
 

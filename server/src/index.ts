@@ -92,11 +92,11 @@ app.post('/api/login', async (req: Request, res: Response): Promise<void> => {
     const fallbackLogin = () => {
         // Default seed data credentials
         if (username === 'admin' && password === 'admin123') {
-            res.json({ success: true, role: 'admin', user: { name: 'Admin User' }, message: 'Login successful (Offline Mode)' });
+            res.json({ success: true, role: 'admin', user: { id: 1, name: 'Admin User' }, message: 'Login successful (Offline Mode)' });
             return true;
         }
         if (username === 'user' && password === 'user123') {
-            res.json({ success: true, role: 'staff', user: { name: 'Staff User' }, message: 'Login successful (Offline Mode)' });
+            res.json({ success: true, role: 'staff', user: { id: 2, name: 'Staff User' }, message: 'Login successful (Offline Mode)' });
             return true;
         }
         return false;
