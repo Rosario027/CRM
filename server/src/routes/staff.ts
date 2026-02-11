@@ -35,16 +35,23 @@ router.get('/', async (req: Request, res: Response) => {
 router.post('/', async (req: Request, res: Response): Promise<void> => {
     const { firstName, lastName, email, role, department, title, password, employeeId } = req.body;
 
-    if (!firstName || !lastName || !email || !password) {
-        res.status(400).json({ success: false, message: 'Missing required fields' });
+    if (!firstName || !lastName || !email || !password || !employeeId) {
+        res.status(400).json({ success: false, message: 'Missing required fields: firstName, lastName, email, password, employeeId' });
         return;
     }
 
     try {
-        // Check if user already exists
+        // Check if user already exists by email
         const existingUser = await db.select().from(users).where(eq(users.email, email));
         if (existingUser.length > 0) {
             res.status(409).json({ success: false, message: 'User with this email already exists' });
+            return;
+        }
+
+        // Check if employeeId already exists
+        const existingEmployeeId = await db.select().from(users).where(eq(users.employeeId, employeeId));
+        if (existingEmployeeId.length > 0) {
+            res.status(409).json({ success: false, message: 'Employee ID already exists' });
             return;
         }
 

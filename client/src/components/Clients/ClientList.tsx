@@ -8,10 +8,8 @@ const ClientList: React.FC = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [filterStatus, setFilterStatus] = useState<string | null>(null);
 
-    // Get current user to check permissions
-    const storedUser = localStorage.getItem('user');
-    const user = storedUser ? JSON.parse(storedUser) : null;
-    const userRole = user?.role || 'staff';
+    // Get current user role to check permissions
+    const userRole = localStorage.getItem('userRole') || 'staff';
     const isAdmin = userRole === 'admin' || userRole === 'proprietor';
 
     useEffect(() => {

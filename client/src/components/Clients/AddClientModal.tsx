@@ -15,9 +15,11 @@ const AddClientModal: React.FC<AddClientModalProps> = ({ isOpen, onClose, onSucc
     const [address, setAddress] = useState('');
     const [status, setStatus] = useState('lead');
     const [loading, setLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        setError(null);
         setLoading(true);
 
         try {
@@ -46,11 +48,12 @@ const AddClientModal: React.FC<AddClientModalProps> = ({ isOpen, onClose, onSucc
                 setAddress('');
                 setStatus('lead');
             } else {
-                alert(data.message);
+                console.error('Error response:', data);
+                setError(data.message || 'Failed to add client');
             }
-        } catch (error) {
-            console.error(error);
-            alert('Failed to add client');
+        } catch (error: any) {
+            console.error('Error adding client:', error);
+            setError(error.message || 'Failed to add client');
         } finally {
             setLoading(false);
         }
@@ -69,6 +72,11 @@ const AddClientModal: React.FC<AddClientModalProps> = ({ isOpen, onClose, onSucc
                 </div>
 
                 <form onSubmit={handleSubmit} className="modal-form">
+                    {error && (
+                        <div className="error-message" style={{ background: '#fee', color: '#c33', padding: '10px', borderRadius: '4px', marginBottom: '10px', fontSize: '0.9rem' }}>
+                            {error}
+                        </div>
+                    )}
                     <div className="form-group">
                         <label>Full Name</label>
                         <input

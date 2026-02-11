@@ -38,21 +38,30 @@ const StaffList: React.FC = () => {
     }, []);
 
     const handleAddStaff = async (staffData: any) => {
-        const response = await fetch('/api/staff', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(staffData),
-        });
+        try {
+            const response = await fetch('/api/staff', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(staffData),
+            });
 
-        const data = await response.json();
+            const data = await response.json();
 
-        if (data.success) {
-            // Refresh list
-            fetchStaff();
-        } else {
-            alert(data.message || 'Failed to add staff');
+            if (data.success) {
+                // Refresh list
+                fetchStaff();
+            } else {
+                // Show detailed error message
+                console.error('Error response:', data);
+                alert(data.message || 'Failed to add staff');
+                throw new Error(data.message || 'Failed to add staff');
+            }
+        } catch (error: any) {
+            console.error('Error adding staff:', error);
+            alert(`Error: ${error.message || 'Failed to add staff member. Please try again.'}`);
+            throw error;
         }
     };
 

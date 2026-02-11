@@ -20,6 +20,7 @@ const AddStaffModal: React.FC<AddStaffModalProps> = ({ isOpen, onClose, onAdd })
         employeeId: ''
     });
     const [loading, setLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
 
     if (!isOpen) return null;
 
@@ -29,6 +30,7 @@ const AddStaffModal: React.FC<AddStaffModalProps> = ({ isOpen, onClose, onAdd })
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        setError(null);
         setLoading(true);
         try {
             await onAdd(formData);
@@ -44,8 +46,9 @@ const AddStaffModal: React.FC<AddStaffModalProps> = ({ isOpen, onClose, onAdd })
                 password: 'password123',
                 employeeId: ''
             });
-        } catch (error) {
-            console.error(error);
+        } catch (error: any) {
+            console.error('Error adding staff:', error);
+            setError(error.message || 'Failed to add employee. Please try again.');
         } finally {
             setLoading(false);
         }
@@ -62,6 +65,11 @@ const AddStaffModal: React.FC<AddStaffModalProps> = ({ isOpen, onClose, onAdd })
                 </div>
 
                 <form onSubmit={handleSubmit} className="modal-form">
+                    {error && (
+                        <div className="error-message" style={{ background: '#fee', color: '#c33', padding: '10px', borderRadius: '4px', marginBottom: '10px', fontSize: '0.9rem' }}>
+                            {error}
+                        </div>
+                    )}
                     <div className="form-group">
                         <label>Employee ID</label>
                         <input
