@@ -122,3 +122,115 @@
     text-align: center;
     padding: 2rem;
 }
+
+/* === Pending Tasks Breakdown Panel === */
+.pending-tasks-panel {
+    background-color: white;
+    border-radius: 16px;
+    padding: 1.5rem 2rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    margin-bottom: 1rem;
+}
+
+.panel-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #1a2e26;
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.priority-rows {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.priority-row {
+    display: flex;
+    align-items: center;
+    padding: 1rem 1.25rem;
+    border-radius: 12px;
+    transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.priority-row:hover {
+    transform: translateX(4px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.high-row {
+    background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+    border-left: 5px solid #ef4444;
+}
+
+.medium-row {
+    background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+    border-left: 5px solid #f59e0b;
+}
+
+.low-row {
+    background: linear-gradient(135deg, #fefce8 0%, #fef9c3 100%);
+    border-left: 5px solid #eab308;
+}
+
+.priority-indicator {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    margin-right: 1rem;
+    flex-shrink: 0;
+}
+
+.high-indicator {
+    background-color: #ef4444;
+    box-shadow: 0 0 6px rgba(239, 68, 68, 0.5);
+}
+
+.medium-indicator {
+    background-color: #f59e0b;
+    box-shadow: 0 0 6px rgba(245, 158, 11, 0.5);
+}
+
+.low-indicator {
+    background-color: #eab308;
+    box-shadow: 0 0 6px rgba(234, 179, 8, 0.5);
+}
+
+.priority-label {
+    font-size: 1rem;
+    font-weight: 600;
+    flex: 1;
+}
+
+.high-row .priority-label {
+    color: #b91c1c;
+}
+
+.medium-row .priority-label {
+    color: #b45309;
+}
+
+.low-row .priority-label {
+    color: #a16207;
+}
+
+.priority-count {
+    font-size: 1.5rem;
+    font-weight: 800;
+    min-width: 40px;
+    text-align: right;
+}
+
+.high-row .priority-count {
+    color: #dc2626;
+}
+
+.medium-row .priority-count {
+    color: #d97706;
+}
+
+.low-row .priority-count {
+    color: #ca8a04;
+}

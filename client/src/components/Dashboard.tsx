@@ -57,23 +57,13 @@ const Dashboard: React.FC<DashboardProps> = ({ userRole }) => {
                     </div>
                 </div>
 
-                <div className="stat-card">
+                <div className="stat-card pending-card">
                     <div className="stat-icon green">
                         <Clock size={24} />
                     </div>
                     <div className="stat-info">
                         <h3>Pending Tasks</h3>
-                        <div className="pending-breakdown">
-                            <span className="breakdown-item high" title="High Priority">
-                                <span className="dot"></span> {stats.pendingTasks.high}
-                            </span>
-                            <span className="breakdown-item medium" title="Medium Priority">
-                                <span className="dot"></span> {stats.pendingTasks.medium}
-                            </span>
-                            <span className="breakdown-item low" title="Low Priority">
-                                <span className="dot"></span> {stats.pendingTasks.low}
-                            </span>
-                        </div>
+                        <p className="stat-value">{stats.pendingTasks.total}</p>
                     </div>
                 </div>
 
@@ -100,6 +90,28 @@ const Dashboard: React.FC<DashboardProps> = ({ userRole }) => {
                         </div>
                     </>
                 )}
+            </div>
+
+            {/* Large Pending Tasks Breakdown */}
+            <div className="pending-tasks-panel">
+                <h3 className="panel-title">Pending Tasks by Priority</h3>
+                <div className="priority-rows">
+                    <div className="priority-row high-row">
+                        <div className="priority-indicator high-indicator"></div>
+                        <span className="priority-label">High Priority</span>
+                        <span className="priority-count">{stats.pendingTasks.high}</span>
+                    </div>
+                    <div className="priority-row medium-row">
+                        <div className="priority-indicator medium-indicator"></div>
+                        <span className="priority-label">Medium Priority</span>
+                        <span className="priority-count">{stats.pendingTasks.medium}</span>
+                    </div>
+                    <div className="priority-row low-row">
+                        <div className="priority-indicator low-indicator"></div>
+                        <span className="priority-label">Low Priority</span>
+                        <span className="priority-count">{stats.pendingTasks.low}</span>
+                    </div>
+                </div>
             </div>
 
             <div className="dashboard-sections">
