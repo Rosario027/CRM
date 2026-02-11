@@ -55,7 +55,4 @@ export async function seed() {
     process.exit(0);
 }
 
-seed().catch((err) => {
-    console.error('Seeding failed:', err);
-    process.exit(1);
-});
+
