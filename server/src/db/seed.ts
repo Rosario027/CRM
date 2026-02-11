@@ -2,7 +2,7 @@ import { db } from './index';
 import { users } from './schema';
 import { eq } from 'drizzle-orm';
 
-async function seed() {
+export async function seed() {
     console.log('Seeding database...');
 
     // Check if admin exists

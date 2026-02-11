@@ -32,7 +32,7 @@ pool.connect((err, client, release) => {
     release();
 
     // Auto-run seed/migration logic on startup
-    seed().catch(err => {
+    seed().catch((err: unknown) => {
         console.error('Auto-seeding failed:', err);
     });
 });
