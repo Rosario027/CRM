@@ -9,6 +9,7 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 import path from 'path';
+import { seed } from './db/seed';
 
 // ... (existing imports)
 
@@ -29,6 +30,11 @@ pool.connect((err, client, release) => {
     }
     console.log('Database connected successfully');
     release();
+
+    // Auto-run seed/migration logic on startup
+    seed().catch(err => {
+        console.error('Auto-seeding failed:', err);
+    });
 });
 
 // Serve static files from the React app
