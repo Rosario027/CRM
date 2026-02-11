@@ -21,7 +21,8 @@ interface SidebarProps {
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ userRole, onLogout }) => {
-    const isAdmin = userRole === 'admin' || userRole === 'proprietor';
+    // Explicitly check for admin roles. ensure case-insensitivity just in case
+    const isAdmin = ['admin', 'proprietor'].includes(userRole?.toLowerCase() || '');
 
     return (
         <aside className="sidebar">
