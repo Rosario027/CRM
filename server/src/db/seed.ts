@@ -56,3 +56,4 @@ export async function seed() {
     } catch (err) {
         console.error('Seeding failed:', err);
     }
+}
