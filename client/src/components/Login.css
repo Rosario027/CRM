@@ -14,7 +14,7 @@
   /* Slightly wider */
   height: 640px;
   background-color: white;
-  border-radius: 20px;
+  border-radius: 24px;
   overflow: hidden;
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.08);
   /* Softer, deeper shadow */

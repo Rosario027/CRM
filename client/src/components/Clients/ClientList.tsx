@@ -93,14 +93,14 @@ const ClientList: React.FC = () => {
                 >
                     <div className="count">{counts.renewal}</div>
                     <h3>Renewal Due</h3>
-                    <div className="label">Follow up required</div>
+                    <div className="label">To be followed up</div>
                 </div>
                 <div
                     className={`summary-card status-lead ${filterStatus === 'lead' ? 'active-filter' : ''}`}
                     onClick={() => setFilterStatus(filterStatus === 'lead' ? null : 'lead')}
                 >
                     <div className="count">{counts.lead}</div>
-                    <h3>New Leads</h3>
+                    <h3>New Clients</h3>
                     <div className="label">To be converted</div>
                 </div>
                 <div
@@ -116,8 +116,8 @@ const ClientList: React.FC = () => {
                     onClick={() => setFilterStatus(filterStatus === 'inactive' ? null : 'inactive')}
                 >
                     <div className="count">{counts.inactive}</div>
-                    <h3>Inactive</h3>
-                    <div className="label">Previous clients</div>
+                    <h3>Previous Clients</h3>
+                    <div className="label">No longer part of workflow</div>
                 </div>
             </div>
 
