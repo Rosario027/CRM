@@ -11,16 +11,26 @@ async function seed() {
     if (existingAdmin.length === 0) {
         console.log('Creating admin user...');
         await db.insert(users).values({
-            email: 'admin', // Using 'admin' as username/email for simplicity as per previous requirements
+            email: 'admin',
             password: 'admin123',
             firstName: 'Admin',
             lastName: 'User',
             role: 'admin',
+            employeeId: 'ADMIN001',
             department: 'Management',
-            title: 'Proprietor'
+            title: 'Proprietor',
+            isActive: true
         });
     } else {
-        console.log('Admin user already exists.');
+        console.log('Admin user exists. Updating role and ID...');
+        // Force update to ensure correct role and ID
+        await db.update(users)
+            .set({
+                role: 'admin',
+                employeeId: 'ADMIN001',
+                isActive: true
+            })
+            .where(eq(users.email, 'admin'));
     }
 
     // Check if staff exists
