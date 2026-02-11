@@ -7,6 +7,7 @@ CREATE TABLE IF NOT EXISTS users (
   password TEXT NOT NULL,
   first_name VARCHAR(100) NOT NULL,
   last_name VARCHAR(100) NOT NULL,
+  employee_id VARCHAR(50) UNIQUE,
   profile_image_url TEXT,
   role TEXT NOT NULL DEFAULT 'staff' CHECK (role IN ('admin', 'proprietor', 'staff')),
   department TEXT,
@@ -96,6 +97,19 @@ CREATE TABLE IF NOT EXISTS monthly_summaries (
   attendance_days INTEGER DEFAULT 0,
   leave_days INTEGER DEFAULT 0,
   total_expenses DECIMAL(10, 2) DEFAULT 0,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Clients
+CREATE TABLE IF NOT EXISTS clients (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(100) NOT NULL,
+  email VARCHAR(255) UNIQUE NOT NULL,
+  phone VARCHAR(20),
+  company VARCHAR(100),
+  address TEXT,
+  status TEXT NOT NULL DEFAULT 'lead' CHECK (status IN ('active', 'renewal', 'lead', 'pitch', 'inactive')),
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

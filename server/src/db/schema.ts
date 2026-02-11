@@ -8,6 +8,7 @@ export const users = pgTable("users", {
     password: text("password").notNull(),
     firstName: varchar("first_name", { length: 100 }).notNull(),
     lastName: varchar("last_name", { length: 100 }).notNull(),
+    employeeId: varchar("employee_id", { length: 50 }).unique(),
     profileImageUrl: text("profile_image_url"),
     role: text("role", { enum: ["admin", "proprietor", "staff"] }).default("staff").notNull(),
     department: text("department"),

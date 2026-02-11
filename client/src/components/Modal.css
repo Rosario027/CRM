@@ -104,15 +104,17 @@
 .form-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 1rem;
+    gap: 1.5rem;
+    /* Increased gap */
 }
 
 .modal-footer {
     display: flex;
     justify-content: flex-end;
     gap: 1rem;
-    margin-top: 2rem;
-    padding-top: 1rem;
+    margin-top: 2.5rem;
+    /* Increased margin */
+    padding-top: 1.5rem;
     border-top: 1px solid #f3f4f6;
 }
 
@@ -133,7 +135,8 @@
 }
 
 .submit-btn {
-    background-color: #10b981;
+    background-color: #4a6b5d;
+    /* Premium Green */
     border: none;
     color: white;
     padding: 0.75rem 1.5rem;
@@ -144,7 +147,8 @@
 }
 
 .submit-btn:hover {
-    background-color: #059669;
+    background-color: #3d5a4d;
+    /* Darker Premium Green */
     transform: translateY(-1px);
 }
 

@@ -16,7 +16,8 @@ const AddStaffModal: React.FC<AddStaffModalProps> = ({ isOpen, onClose, onAdd })
         department: '',
         role: 'staff',
         title: '',
-        password: 'password123' // Default password for now
+        password: 'password123', // Default password for now
+        employeeId: ''
     });
     const [loading, setLoading] = useState(false);
 
@@ -40,7 +41,8 @@ const AddStaffModal: React.FC<AddStaffModalProps> = ({ isOpen, onClose, onAdd })
                 department: '',
                 role: 'staff',
                 title: '',
-                password: 'password123'
+                password: 'password123',
+                employeeId: ''
             });
         } catch (error) {
             console.error(error);
@@ -59,7 +61,20 @@ const AddStaffModal: React.FC<AddStaffModalProps> = ({ isOpen, onClose, onAdd })
                     </button>
                 </div>
 
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit} className="modal-form">
+                    <div className="form-group">
+                        <label>Employee ID</label>
+                        <input
+                            type="text"
+                            name="employeeId"
+                            className="form-input"
+                            value={formData.employeeId}
+                            onChange={handleChange}
+                            placeholder="e.g. EMP001"
+                            required
+                        />
+                    </div>
+
                     <div className="form-row">
                         <div className="form-group">
                             <label>First Name</label>
@@ -147,7 +162,7 @@ const AddStaffModal: React.FC<AddStaffModalProps> = ({ isOpen, onClose, onAdd })
                         />
                     </div>
 
-                    <div className="modal-actions">
+                    <div className="modal-footer">
                         <button type="button" className="cancel-btn" onClick={onClose}>Cancel</button>
                         <button type="submit" className="submit-btn" disabled={loading}>
                             {loading ? 'Adding...' : 'Add Employee'}
