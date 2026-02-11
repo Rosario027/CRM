@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
     DollarSign,
     Users,
@@ -13,15 +14,16 @@ interface DashboardProps {
 
 const Dashboard: React.FC<DashboardProps> = ({ userRole }) => {
     const isAdmin = userRole === 'admin' || userRole === 'proprietor';
+    const navigate = useNavigate();
     const [stats, setStats] = React.useState({
         tasksLast7Days: 0,
+        totalStaff: 0,
         pendingTasks: { high: 0, medium: 0, low: 0, total: 0 }
     });
 
     React.useEffect(() => {
         const fetchStats = async () => {
             try {
-                // Get user info from localStorage if not passed as prop (though userRole is passed)
                 const userStr = localStorage.getItem('user');
                 const user = userStr ? JSON.parse(userStr) : null;
                 const userId = user?.id;
@@ -38,6 +40,10 @@ const Dashboard: React.FC<DashboardProps> = ({ userRole }) => {
 
         fetchStats();
     }, [userRole]);
+
+    const handlePriorityClick = (priority: string) => {
+        navigate(`/tasks?priority=${priority}`);
+    };
 
     return (
         <div className="dashboard-container">
@@ -69,13 +75,13 @@ const Dashboard: React.FC<DashboardProps> = ({ userRole }) => {
 
                 {isAdmin && (
                     <>
-                        <div className="stat-card">
+                        <div className="stat-card" onClick={() => navigate('/staff')} style={{ cursor: 'pointer' }}>
                             <div className="stat-icon purple">
                                 <Users size={24} />
                             </div>
                             <div className="stat-info">
                                 <h3 className="admin-stat-label">Total Staff</h3>
-                                <p className="stat-value">12</p>
+                                <p className="stat-value">{stats.totalStaff}</p>
                             </div>
                         </div>
 
@@ -92,30 +98,32 @@ const Dashboard: React.FC<DashboardProps> = ({ userRole }) => {
                 )}
             </div>
 
-            {/* Large Pending Tasks Breakdown */}
+            {/* Large Pending Tasks Breakdown - Clickable */}
             <div className="pending-tasks-panel">
                 <h3 className="panel-title">Pending Tasks by Priority</h3>
                 <div className="priority-rows">
-                    <div className="priority-row high-row">
+                    <div className="priority-row high-row" onClick={() => handlePriorityClick('high')}>
                         <div className="priority-indicator high-indicator"></div>
                         <span className="priority-label">High Priority</span>
                         <span className="priority-count">{stats.pendingTasks.high}</span>
+                        <span className="priority-arrow">→</span>
                     </div>
-                    <div className="priority-row medium-row">
+                    <div className="priority-row medium-row" onClick={() => handlePriorityClick('medium')}>
                         <div className="priority-indicator medium-indicator"></div>
                         <span className="priority-label">Medium Priority</span>
                         <span className="priority-count">{stats.pendingTasks.medium}</span>
+                        <span className="priority-arrow">→</span>
                     </div>
-                    <div className="priority-row low-row">
+                    <div className="priority-row low-row" onClick={() => handlePriorityClick('low')}>
                         <div className="priority-indicator low-indicator"></div>
                         <span className="priority-label">Low Priority</span>
                         <span className="priority-count">{stats.pendingTasks.low}</span>
+                        <span className="priority-arrow">→</span>
                     </div>
                 </div>
             </div>
 
             <div className="dashboard-sections">
-                {/* We will add charts or tables here later */}
                 <div className="section-card">
                     <h3>Recent Activities</h3>
                     <p className="empty-state">No recent activities to show.</p>

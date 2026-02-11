@@ -153,6 +153,8 @@
     padding: 1rem 1.25rem;
     border-radius: 12px;
     transition: transform 0.15s, box-shadow 0.15s;
+    cursor: pointer;
+    user-select: none;
 }
 
 .priority-row:hover {
@@ -171,8 +173,8 @@
 }
 
 .low-row {
-    background: linear-gradient(135deg, #fefce8 0%, #fef9c3 100%);
-    border-left: 5px solid #eab308;
+    background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+    border-left: 5px solid #3b82f6;
 }
 
 .priority-indicator {
@@ -194,8 +196,8 @@
 }
 
 .low-indicator {
-    background-color: #eab308;
-    box-shadow: 0 0 6px rgba(234, 179, 8, 0.5);
+    background-color: #3b82f6;
+    box-shadow: 0 0 6px rgba(59, 130, 246, 0.5);
 }
 
 .priority-label {
@@ -213,7 +215,7 @@
 }
 
 .low-row .priority-label {
-    color: #a16207;
+    color: #1d4ed8;
 }
 
 .priority-count {
@@ -232,5 +234,17 @@
 }
 
 .low-row .priority-count {
-    color: #ca8a04;
+    color: #2563eb;
+}
+
+.priority-arrow {
+    font-size: 1.2rem;
+    margin-left: 0.75rem;
+    opacity: 0.4;
+    transition: opacity 0.15s, transform 0.15s;
+}
+
+.priority-row:hover .priority-arrow {
+    opacity: 1;
+    transform: translateX(4px);
 }

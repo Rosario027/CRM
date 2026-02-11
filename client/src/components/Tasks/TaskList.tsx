@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Plus, Calendar, User } from 'lucide-react';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 import TaskModal from './TaskModal';
 import './Tasks.css';
 
@@ -7,6 +8,11 @@ const TaskList: React.FC = () => {
     const [tasks, setTasks] = useState<any[]>([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [filter, setFilter] = useState<'all' | 'my'>('all');
+    const [searchParams] = useSearchParams();
+    const navigate = useNavigate();
+
+    // Read priority filter from URL query string (from dashboard click)
+    const priorityFilter = searchParams.get('priority');
 
     // Get current user
     const storedUser = localStorage.getItem('user');
@@ -14,7 +20,7 @@ const TaskList: React.FC = () => {
 
     useEffect(() => {
         fetchTasks();
-    }, [filter]);
+    }, [filter, priorityFilter]);
 
     const fetchTasks = async () => {
         try {
@@ -26,7 +32,16 @@ const TaskList: React.FC = () => {
             const res = await fetch(url);
             const data = await res.json();
             if (data.success) {
-                setTasks(data.data);
+                let filtered = data.data;
+
+                // Apply priority filter from URL if present
+                if (priorityFilter) {
+                    filtered = filtered.filter((t: any) =>
+                        t.priority === priorityFilter && t.status === 'pending'
+                    );
+                }
+
+                setTasks(filtered);
             }
         } catch (error) {
             console.error('Failed to fetch tasks:', error);
@@ -49,6 +64,10 @@ const TaskList: React.FC = () => {
         }
     };
 
+    const clearPriorityFilter = () => {
+        navigate('/tasks');
+    };
+
     return (
         <div className="tasks-container">
             <div className="tasks-header">
@@ -63,6 +82,14 @@ const TaskList: React.FC = () => {
             </div>
 
             <div className="tasks-filter">
+                {priorityFilter && (
+                    <div className="priority-filter-banner">
+                        Showing <strong>{priorityFilter}</strong> priority pending tasks
+                        <button className="clear-filter-btn" onClick={clearPriorityFilter}>
+                            ✕ Clear Filter
+                        </button>
+                    </div>
+                )}
                 <button
                     className={`filter-btn ${filter === 'all' ? 'active' : ''}`}
                     onClick={() => setFilter('all')}
@@ -119,7 +146,12 @@ const TaskList: React.FC = () => {
                 ))}
 
                 {tasks.length === 0 && (
-                    <div className="empty-state">No tasks found.</div>
+                    <div className="empty-state">
+                        {priorityFilter
+                            ? `No ${priorityFilter} priority pending tasks found.`
+                            : 'No tasks found.'
+                        }
+                    </div>
                 )}
             </div>
 

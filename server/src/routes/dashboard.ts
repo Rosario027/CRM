@@ -1,6 +1,6 @@
 import { Router, Request, Response } from 'express';
 import { db } from '../db';
-import { tasks } from '../db/schema';
+import { tasks, users } from '../db/schema';
 import { sql, and, eq, gt, or } from 'drizzle-orm';
 
 const router = Router();
@@ -10,67 +10,42 @@ router.get('/stats', async (req: Request, res: Response) => {
     const { userId, role } = req.query;
 
     try {
-        // 1. Tasks assigned in last 7 days
         const sevenDaysAgo = new Date();
         sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
 
-        // Build base filters
         let userFilter = undefined;
         if (role === 'staff' && userId) {
             userFilter = eq(tasks.assignedToId, parseInt(userId as string));
         }
 
-        const tasksLast7Days = await db
-            .select({ count: sql<number>`count(*)` })
-            .from(tasks)
-            .where(
-                and(
-                    gt(tasks.createdAt, sevenDaysAgo),
-                    userFilter
-                )
-            );
+        // Run ALL queries in parallel for speed
+        const [tasksLast7Days, highPending, mediumPending, lowPending, totalStaffResult] = await Promise.all([
+            db.select({ count: sql<number>`count(*)` })
+                .from(tasks)
+                .where(and(gt(tasks.createdAt, sevenDaysAgo), userFilter)),
 
-        // 2. Pending Tasks Breakdown
-        // High Priority (Red)
-        const highPending = await db
-            .select({ count: sql<number>`count(*)` })
-            .from(tasks)
-            .where(
-                and(
-                    eq(tasks.status, 'pending'),
-                    or(eq(tasks.priority, 'high'), eq(tasks.priority, 'critical')),
-                    userFilter
-                )
-            );
+            db.select({ count: sql<number>`count(*)` })
+                .from(tasks)
+                .where(and(eq(tasks.status, 'pending'), or(eq(tasks.priority, 'high'), eq(tasks.priority, 'critical')), userFilter)),
 
-        // Medium Priority (Orange)
-        const mediumPending = await db
-            .select({ count: sql<number>`count(*)` })
-            .from(tasks)
-            .where(
-                and(
-                    eq(tasks.status, 'pending'),
-                    eq(tasks.priority, 'medium'),
-                    userFilter
-                )
-            );
+            db.select({ count: sql<number>`count(*)` })
+                .from(tasks)
+                .where(and(eq(tasks.status, 'pending'), eq(tasks.priority, 'medium'), userFilter)),
 
-        // Low Priority (Yellow)
-        const lowPending = await db
-            .select({ count: sql<number>`count(*)` })
-            .from(tasks)
-            .where(
-                and(
-                    eq(tasks.status, 'pending'),
-                    eq(tasks.priority, 'low'),
-                    userFilter
-                )
-            );
+            db.select({ count: sql<number>`count(*)` })
+                .from(tasks)
+                .where(and(eq(tasks.status, 'pending'), eq(tasks.priority, 'low'), userFilter)),
+
+            db.select({ count: sql<number>`count(*)` })
+                .from(users)
+                .where(eq(users.isActive, true))
+        ]);
 
         res.json({
             success: true,
             data: {
                 tasksLast7Days: Number(tasksLast7Days[0].count),
+                totalStaff: Number(totalStaffResult[0].count),
                 pendingTasks: {
                     high: Number(highPending[0].count),
                     medium: Number(mediumPending[0].count),
