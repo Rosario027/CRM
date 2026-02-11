@@ -74,7 +74,7 @@ router.put('/:id', async (req: Request, res: Response): Promise<void> => {
                 ...(isActive !== undefined && { isActive }),
                 updatedAt: new Date(),
             })
-            .where(eq(products.id, parseInt(id)))
+            .where(eq(products.id, parseInt(id as string)))
             .returning();
 
         if (updated.length === 0) {
@@ -95,7 +95,7 @@ router.delete('/:id', async (req: Request, res: Response): Promise<void> => {
 
     try {
         const deleted = await db.delete(products)
-            .where(eq(products.id, parseInt(id)))
+            .where(eq(products.id, parseInt(id as string)))
             .returning();
 
         if (deleted.length === 0) {
