@@ -1,7 +1,7 @@
 import express, { Request, Response } from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import { Pool } from 'pg';
+
 
 dotenv.config();
 
@@ -18,24 +18,40 @@ app.use(cors());
 app.use(express.json());
 
 // Database connection
-const pool = new Pool({
-    connectionString: process.env.DATABASE_URL,
-});
+import { pool, checkDbConnection } from './db';
 
-// Test DB connection
-pool.connect((err, client, release) => {
-    if (err) {
-        console.error('Error acquiring client', err.stack);
-        return;
+const waitForDatabase = async (retries = 5, delay = 5000) => {
+    for (let i = 0; i < retries; i++) {
+        const connected = await checkDbConnection();
+        if (connected) return true;
+        console.log(`Database not ready. Retrying in ${delay / 1000}s... (${i + 1}/${retries})`);
+        await new Promise(res => setTimeout(res, delay));
     }
-    console.log('Database connected successfully');
-    release();
+    return false;
+};
 
-    // Auto-run seed/migration logic on startup
-    seed().catch((err: unknown) => {
-        console.error('Auto-seeding failed:', err);
+// Initialize Server
+const init = async () => {
+    const dbReady = await waitForDatabase();
+
+    if (dbReady) {
+        console.log('Database connection established. Running migrations...');
+        try {
+            await seed();
+        } catch (err: unknown) {
+            console.error('Auto-seeding failed:', err);
+        }
+    } else {
+        console.error('Could not connect to database after retries. Starting in offline mode.');
+    }
+
+    app.listen(PORT, () => {
+        console.log(`Server is running on port ${PORT}`);
     });
-});
+};
+
+init();
+
 
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, '../../client/dist')));
@@ -130,6 +146,5 @@ app.get(/(.*)/, (req: Request, res: Response) => {
     res.sendFile(path.join(__dirname, '../../client/dist/index.html'));
 });
 
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-});
+// app.listen moved to init() function
+

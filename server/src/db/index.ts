@@ -15,21 +15,26 @@ if (!connectionString) {
 }
 
 // Use connection pool for better performance
-const pool = new pg.Pool({
+export const pool = new pg.Pool({
     connectionString: connectionString || "postgres://dummy:dummy@localhost:5432/dummy",
     max: 20, // Max clients in the pool
     idleTimeoutMillis: 30000,
     connectionTimeoutMillis: 2000,
 });
 
-// Test connection
-pool.connect().then((client) => {
-    console.log("Connected to PostgreSQL database (Pool)");
-    isDbConnected = true;
-    client.release();
-}).catch((err) => {
-    console.warn("Failed to connect to database. App will run in offline mode.", err.message);
-    isDbConnected = false;
-});
+// Initializer helper to check connection (optional, logic moved to index.ts mostly)
+export const checkDbConnection = async () => {
+    try {
+        const client = await pool.connect();
+        console.log("Connected to PostgreSQL database (Pool)");
+        isDbConnected = true;
+        client.release();
+        return true;
+    } catch (err: any) {
+        console.warn("Failed to connect to database.", err.message);
+        isDbConnected = false;
+        return false;
+    }
+};
 
 export const db = drizzle(pool, { schema });
