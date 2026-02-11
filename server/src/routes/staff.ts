@@ -1,5 +1,5 @@
 import { Router, Request, Response } from 'express';
-import { db } from '../db';
+import { db, isDbConnected } from '../db';
 import { users } from '../db/schema';
 import { eq, desc } from 'drizzle-orm';
 
@@ -37,6 +37,12 @@ router.post('/', async (req: Request, res: Response): Promise<void> => {
 
     if (!firstName || !lastName || !email || !password || !employeeId) {
         res.status(400).json({ success: false, message: 'Missing required fields: firstName, lastName, email, password, employeeId' });
+        return;
+    }
+
+    // Check database connection
+    if (!isDbConnected) {
+        res.status(503).json({ success: false, message: 'Database connection not available. Please try again later.' });
         return;
     }
 
