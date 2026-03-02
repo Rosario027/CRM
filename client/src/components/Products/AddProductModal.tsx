@@ -297,6 +297,40 @@ const AddProductModal: React.FC<AddProductModalProps> = ({ isOpen, onClose, onSu
                                     )}
                                 </div>
                             )}
+                        </>
+                    )}
+
+                    <div className="form-group">
+                        <label>Short Description</label>
+                        <input type="text" name="shortDescription" value={formData.shortDescription} onChange={handleChange} placeholder="Brief one-liner about the product" maxLength={150} />
+                    </div>
+
+                    <div className="form-group">
+                        <label>Full Description *</label>
+                        <textarea name="description" value={formData.description} onChange={handleChange} placeholder="Detailed product description..." rows={3} required />
+                    </div>
+
+                    <div className="form-row">
+                        <div className="form-group">
+                            <label>Premium Starting (₹) *</label>
+                            <input type="number" name="premiumStarting" value={formData.premiumStarting} onChange={handleChange} placeholder="e.g. 5000" required min="0" step="0.01" />
+                        </div>
+                        <div className="form-group">
+                            <label>Coverage Amount (₹) *</label>
+                            <input type="number" name="coverageAmount" value={formData.coverageAmount} onChange={handleChange} placeholder="e.g. 500000" required min="0" step="0.01" />
+                        </div>
+                        <div className="form-group">
+                            <label>Duration</label>
+                            <input type="text" name="duration" value={formData.duration} onChange={handleChange} placeholder="e.g. 1 Year, Lifetime" />
+                        </div>
+                    </div>
+
+                    {/* Dynamic Features List */}
+                    <div className="form-group features-group">
+                        <label>Key Features</label>
+                        {features.map((feature, index) => (
+                            <div key={index} className="feature-input-row">
+                                <input
                                     type="text"
                                     value={feature}
                                     onChange={(e) => handleFeatureChange(index, e.target.value)}
