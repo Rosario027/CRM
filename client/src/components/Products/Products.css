@@ -5,6 +5,20 @@
     margin: 0 auto;
 }
 
+/* motor-insurance helper classes */
+.add-brand-row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+.add-brand-row input {
+    flex: 1;
+}
+.motor-details {
+    margin-top: 8px;
+    font-size: 0.9rem;
+}
+
 /* Hero Header */
 .products-hero {
     background: linear-gradient(135deg, #1a2e26 0%, #2d4a3e 40%, #3d6b5a 100%);

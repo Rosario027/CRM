@@ -18,6 +18,10 @@ interface Product {
     duration: string;
     features: string[];
     terms: string;
+    // motor-specific values
+    motorCondition?: string;
+    motorBrand?: string;
+    motorModel?: string;
     isActive: boolean;
     createdAt: string;
 }
@@ -232,6 +236,13 @@ const ProductCatalog: React.FC<ProductCatalogProps> = ({ userRole }) => {
                         <div className="detail-body">
                             <h2>{selectedProduct.name}</h2>
                             <p className="detail-description">{selectedProduct.description}</p>
+                            {selectedProduct.category === 'motor' && (
+                                <div className="motor-details">
+                                    <p><strong>Condition:</strong> {selectedProduct.motorCondition || 'N/A'}</p>
+                                    <p><strong>Brand:</strong> {selectedProduct.motorBrand || 'N/A'}</p>
+                                    <p><strong>Model:</strong> {selectedProduct.motorModel || 'N/A'}</p>
+                                </div>
+                            )}
 
                             <div className="detail-pricing-row">
                                 <div className="detail-price-box">

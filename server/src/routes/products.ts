@@ -25,17 +25,29 @@ router.get('/', async (req: Request, res: Response) => {
 
 // POST /api/products - Create a new product (admin only)
 router.post('/', async (req: Request, res: Response): Promise<void> => {
-    const { name, category, description, shortDescription, premiumStarting, coverageAmount, duration, features, terms, createdById } = req.body;
+    const { name, category, description, shortDescription, premiumStarting, coverageAmount, duration, features, terms, createdById,
+        motorCondition, motorBrand, motorModel } = req.body;
 
     if (!name || !category || !description || !premiumStarting || !coverageAmount) {
         res.status(400).json({ success: false, message: 'Missing required fields: name, category, description, premiumStarting, coverageAmount' });
         return;
     }
 
+    if (category === 'motor') {
+        if (!motorCondition || !motorBrand || !motorModel) {
+            res.status(400).json({ success: false, message: 'Motor products require condition, brand and model' });
+            return;
+        }
+    }
+
     try {
         const newProduct = await db.insert(products).values({
             name,
             category,
+            // include motor-specific if provided
+            ...(motorCondition && { motorCondition }),
+            ...(motorBrand && { motorBrand }),
+            ...(motorModel && { motorModel }),
             description,
             shortDescription: shortDescription || description.substring(0, 120) + '...',
             premiumStarting,
@@ -57,13 +69,25 @@ router.post('/', async (req: Request, res: Response): Promise<void> => {
 // PUT /api/products/:id - Update a product (admin only)
 router.put('/:id', async (req: Request, res: Response): Promise<void> => {
     const { id } = req.params;
-    const { name, category, description, shortDescription, premiumStarting, coverageAmount, duration, features, terms, isActive } = req.body;
+    const { name, category, description, shortDescription, premiumStarting, coverageAmount, duration, features, terms, isActive,
+        motorCondition, motorBrand, motorModel } = req.body;
+
+    // if category is being updated to motor, ensure condition, brand, and model are provided
+    if (category === 'motor') {
+        if (!motorCondition || !motorBrand || !motorModel) {
+            res.status(400).json({ success: false, message: 'Motor products require condition, brand and model' });
+            return;
+        }
+    }
 
     try {
         const updated = await db.update(products)
             .set({
                 ...(name && { name }),
                 ...(category && { category }),
+                ...(motorCondition && { motorCondition }),
+                ...(motorBrand && { motorBrand }),
+                ...(motorModel && { motorModel }),
                 ...(description && { description }),
                 ...(shortDescription && { shortDescription }),
                 ...(premiumStarting && { premiumStarting }),

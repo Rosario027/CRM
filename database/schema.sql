@@ -120,6 +120,10 @@ CREATE TABLE IF NOT EXISTS products (
   id SERIAL PRIMARY KEY,
   name VARCHAR(200) NOT NULL,
   category TEXT NOT NULL CHECK (category IN ('life', 'health', 'motor', 'travel', 'home', 'business')),
+  -- motor-specific columns
+  motor_condition TEXT CHECK (motor_condition IN ('new','old')) DEFAULT 'new',
+  motor_brand VARCHAR(100),
+  motor_model VARCHAR(100),
   description TEXT NOT NULL,
   short_description TEXT,
   premium_starting DECIMAL(10, 2) NOT NULL,

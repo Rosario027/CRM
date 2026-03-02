@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { X, Plus, Trash2 } from 'lucide-react';
+import { initialBrands } from '../../utils/motorBrands';
+import { initialModels } from '../../utils/motorModels';
 
 interface AddProductModalProps {
     isOpen: boolean;
@@ -18,11 +20,28 @@ const AddProductModal: React.FC<AddProductModalProps> = ({ isOpen, onClose, onSu
         coverageAmount: '',
         duration: '1 Year',
         terms: '',
+        // motor-specific fields
+        motorCondition: 'new', // new or old
+        motorBrand: '',
+        motorModel: '',
     });
     const [features, setFeatures] = useState<string[]>(['']);
+    const [brands, setBrands] = useState<string[]>([]);
+    const [models, setModels] = useState<string[]>([]);
+    const [showBrandInput, setShowBrandInput] = useState(false);
+    const [brandInput, setBrandInput] = useState('');
+    const [showModelInput, setShowModelInput] = useState(false);
+    const [modelInput, setModelInput] = useState('');
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
+        // initialize brand list constant when modal opens
+        let list = [...initialBrands];
+        if (editProduct && editProduct.motorBrand && !list.includes(editProduct.motorBrand)) {
+            list.push(editProduct.motorBrand);
+        }
+        setBrands(list);
+
         if (editProduct) {
             setFormData({
                 name: editProduct.name || '',
@@ -33,24 +52,107 @@ const AddProductModal: React.FC<AddProductModalProps> = ({ isOpen, onClose, onSu
                 coverageAmount: editProduct.coverageAmount || '',
                 duration: editProduct.duration || '1 Year',
                 terms: editProduct.terms || '',
+                motorCondition: editProduct.motorCondition || 'new',
+                motorBrand: editProduct.motorBrand || '',
+                motorModel: editProduct.motorModel || '',
             });
             setFeatures(editProduct.features?.length ? editProduct.features : ['']);
+
+            // load models list for brand, include model if missing
+            if (editProduct.motorBrand) {
+                const base = initialModels[editProduct.motorBrand] || [];
+                const arr = [...base];
+                if (editProduct.motorModel && !arr.includes(editProduct.motorModel)) {
+                    arr.push(editProduct.motorModel);
+                }
+                setModels(arr);
+            }
         } else {
             resetForm();
         }
     }, [editProduct, isOpen]);
 
+    // whenever category toggles away from motor, clear the motor-specific fields
+    useEffect(() => {
+        if (formData.category !== 'motor') {
+            setFormData((prev) => ({ ...prev, motorBrand: '', motorCondition: 'new', motorModel: '' }));
+            setShowBrandInput(false);
+            setBrandInput('');
+            setShowModelInput(false);
+            setModelInput('');
+            setModels([]);
+        }
+    }, [formData.category]);
+
+    // whenever category toggles away from motor, clear the motor-specific fields
+    useEffect(() => {
+        if (formData.category !== 'motor') {
+            setFormData((prev) => ({ ...prev, motorBrand: '', motorCondition: 'new' }));
+            setShowBrandInput(false);
+            setBrandInput('');
+        }
+    }, [formData.category]);
+
     const resetForm = () => {
         setFormData({
             name: '', category: 'life', description: '', shortDescription: '',
             premiumStarting: '', coverageAmount: '', duration: '1 Year', terms: '',
+            motorCondition: 'new',
+            motorBrand: '',
+            motorModel: '',
         });
         setFeatures(['']);
+        setModels([]);
+        setShowBrandInput(false);
+        setBrandInput('');
+        setShowModelInput(false);
+        setModelInput('');
     };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
+        const { name, value } = e.target;
+        // special case: if user chooses "Add New Brand" option
+        if (name === 'motorBrand' && value === 'add_new') {
+            setShowBrandInput(true);
+            return;
+        }
+        if (name === 'motorModel' && value === 'add_new_model') {
+            setShowModelInput(true);
+            return;
+        }
+        setFormData({ ...formData, [name]: value });
+
+        // when brand changes, reset model and load list
+        if (name === 'motorBrand') {
+            const list = initialModels[value] ? [...initialModels[value]] : [];
+            setModels(list);
+            setFormData(prev => ({ ...prev, motorModel: '' }));
+            setShowModelInput(false);
+            setModelInput('');
+        }
     };
+
+    const addBrand = () => {
+        const trimmed = brandInput.trim();
+        if (trimmed && !brands.includes(trimmed)) {
+            setBrands([...brands, trimmed]);
+            setFormData({ ...formData, motorBrand: trimmed });
+            setModels([]);
+        }
+        setShowBrandInput(false);
+        setBrandInput('');
+    };
+
+    const addModel = () => {
+        const trimmed = modelInput.trim();
+        if (trimmed && !models.includes(trimmed)) {
+            setModels([...models, trimmed]);
+            setFormData({ ...formData, motorModel: trimmed });
+        }
+        setShowModelInput(false);
+        setModelInput('');
+    };
+
 
     const handleFeatureChange = (index: number, value: string) => {
         const updated = [...features];
@@ -133,37 +235,68 @@ const AddProductModal: React.FC<AddProductModalProps> = ({ isOpen, onClose, onSu
                         </div>
                     </div>
 
-                    <div className="form-group">
-                        <label>Short Description</label>
-                        <input type="text" name="shortDescription" value={formData.shortDescription} onChange={handleChange} placeholder="Brief one-liner about the product" maxLength={150} />
-                    </div>
+                    {/* motor-specific subfields */}
+                    {formData.category === 'motor' && (
+                        <>
+                            <div className="form-row">
+                                <div className="form-group">
+                                    <label>Condition *</label>
+                                    <select name="motorCondition" value={formData.motorCondition} onChange={handleChange} required>
+                                        <option value="new">New</option>
+                                        <option value="old">Old</option>
+                                    </select>
+                                </div>
+                                <div className="form-group">
+                                    <label>Brand *</label>
+                                    {!showBrandInput ? (
+                                        <select name="motorBrand" value={formData.motorBrand} onChange={handleChange} required>
+                                            <option value="">Select Brand</option>
+                                            {brands.map(b => (
+                                                <option key={b} value={b}>{b}</option>
+                                            ))}
+                                            <option value="add_new">+ Add New Brand</option>
+                                        </select>
+                                    ) : (
+                                        <div className="add-brand-row">
+                                            <input
+                                                type="text"
+                                                value={brandInput}
+                                                onChange={(e) => setBrandInput(e.target.value)}
+                                                placeholder="Enter new brand"
+                                            />
+                                            <button type="button" className="btn" onClick={addBrand}>Add</button>
+                                            <button type="button" className="btn-cancel" onClick={() => { setShowBrandInput(false); setBrandInput(''); }}>Cancel</button>
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
 
-                    <div className="form-group">
-                        <label>Full Description *</label>
-                        <textarea name="description" value={formData.description} onChange={handleChange} placeholder="Detailed product description..." rows={3} required />
-                    </div>
-
-                    <div className="form-row">
-                        <div className="form-group">
-                            <label>Premium Starting (₹) *</label>
-                            <input type="number" name="premiumStarting" value={formData.premiumStarting} onChange={handleChange} placeholder="e.g. 5000" required min="0" step="0.01" />
-                        </div>
-                        <div className="form-group">
-                            <label>Coverage Amount (₹) *</label>
-                            <input type="number" name="coverageAmount" value={formData.coverageAmount} onChange={handleChange} placeholder="e.g. 500000" required min="0" step="0.01" />
-                        </div>
-                        <div className="form-group">
-                            <label>Duration</label>
-                            <input type="text" name="duration" value={formData.duration} onChange={handleChange} placeholder="e.g. 1 Year, Lifetime" />
-                        </div>
-                    </div>
-
-                    {/* Dynamic Features List */}
-                    <div className="form-group features-group">
-                        <label>Key Features</label>
-                        {features.map((feature, index) => (
-                            <div key={index} className="feature-input-row">
-                                <input
+                            {/* model selector appears when a brand is chosen */}
+                            {formData.motorBrand && (
+                                <div className="form-group">
+                                    <label>Model *</label>
+                                    {!showModelInput ? (
+                                        <select name="motorModel" value={formData.motorModel} onChange={handleChange} required>
+                                            <option value="">Select Model</option>
+                                            {models.map(m => (
+                                                <option key={m} value={m}>{m}</option>
+                                            ))}
+                                            <option value="add_new_model">+ Add New Model</option>
+                                        </select>
+                                    ) : (
+                                        <div className="add-brand-row">
+                                            <input
+                                                type="text"
+                                                value={modelInput}
+                                                onChange={(e) => setModelInput(e.target.value)}
+                                                placeholder="Enter new model"
+                                            />
+                                            <button type="button" className="btn" onClick={addModel}>Add</button>
+                                            <button type="button" className="btn-cancel" onClick={() => { setShowModelInput(false); setModelInput(''); }}>Cancel</button>
+                                        </div>
+                                    )}
+                                </div>
+                            )}
                                     type="text"
                                     value={feature}
                                     onChange={(e) => handleFeatureChange(index, e.target.value)}

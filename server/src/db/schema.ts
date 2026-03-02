@@ -121,6 +121,10 @@ export const products = pgTable("products", {
     id: serial("id").primaryKey(),
     name: varchar("name", { length: 200 }).notNull(),
     category: text("category", { enum: ["life", "health", "motor", "travel", "home", "business"] }).notNull(),
+    // motor-specific columns (nullable for non-motor products)
+    motorCondition: text("motor_condition", { enum: ["new", "old"] }).default("new"),
+    motorBrand: varchar("motor_brand", { length: 100 }),
+    motorModel: varchar("motor_model", { length: 100 }),
     description: text("description").notNull(),
     shortDescription: text("short_description"),
     premiumStarting: decimal("premium_starting", { precision: 10, scale: 2 }).notNull(),
