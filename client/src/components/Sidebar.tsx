@@ -9,10 +9,10 @@ import {
     Receipt,
     Settings,
     LogOut,
-    Building2,
     Briefcase,
     ShieldCheck
 } from 'lucide-react';
+import newEraIcon from '../assets/new-era-icon.png';
 
 import './Sidebar.css';
 
@@ -28,7 +28,7 @@ const Sidebar: React.FC<SidebarProps> = ({ userRole, onLogout }) => {
     return (
         <aside className="sidebar">
             <div className="sidebar-header">
-                <Building2 className="brand-icon" size={28} />
+                <img src={newEraIcon} alt="New Era Logo" className="brand-icon" />
                 <h1 className="brand-name">NEWERA</h1>
             </div>
 

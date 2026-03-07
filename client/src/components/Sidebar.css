@@ -22,7 +22,9 @@
 }
 
 .brand-icon {
-    color: #4a6b5d;
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
     margin-right: 0.75rem;
 }
 

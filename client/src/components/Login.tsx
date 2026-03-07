@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Building2 } from 'lucide-react';
+import newEraIcon from '../assets/new-era-icon.png';
 import './Login.css';
 
 interface LoginProps {
@@ -48,7 +48,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
                 <div className="login-hero">
                     <div className="hero-content">
                         <div className="icon-container">
-                            <Building2 size={48} className="login-icon" />
+                            <img src={newEraIcon} alt="New Era Logo" className="login-icon" />
                         </div>
                         <h1 className="hero-title">NEWERA</h1>
                         <p className="hero-subtitle">Office Management System</p>

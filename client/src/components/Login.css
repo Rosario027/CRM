@@ -54,8 +54,9 @@
 }
 
 .login-icon {
-  color: #4a6b5d;
-  /* Muted sage icon */
+  width: 56px;
+  height: 56px;
+  object-fit: contain;
 }
 
 .hero-title {
