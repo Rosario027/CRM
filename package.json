@@ -1,0 +1,17 @@
+{
+    "name": "office-manager",
+    "version": "1.0.0",
+    "private": true,
+    "workspaces": [
+        "client",
+        "server"
+    ],
+    "scripts": {
+        "build": "npm run build --workspaces",
+        "start": "npm start --workspace=server",
+        "dev": "npm run dev --workspaces"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC"
+}

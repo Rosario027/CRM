@@ -1,0 +1,152 @@
+/* Leaves.css */
+.leaves-container {
+    padding: 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.leaves-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.leaves-header h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #1a2e26;
+    margin: 0;
+}
+
+.leaves-header p {
+    color: #5c7a6f;
+    margin: 0.5rem 0 0;
+}
+
+.request-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: #10b981;
+    color: white;
+    padding: 0.75rem 1.25rem;
+    border-radius: 8px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.request-btn:hover {
+    background-color: #059669;
+    transform: translateY(-1px);
+}
+
+.leaves-grid {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 2rem;
+}
+
+.leaves-list {
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+}
+
+.leaves-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.leaves-table th {
+    text-align: left;
+    padding: 1rem 1.5rem;
+    background-color: #f8fafc;
+    color: #64748b;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.leaves-table td {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid #f1f5f9;
+    color: #334155;
+    font-size: 0.95rem;
+}
+
+.leaves-table tr:last-child td {
+    border-bottom: none;
+}
+
+.status-badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: capitalize;
+    display: inline-block;
+}
+
+.status-badge.pending {
+    background-color: #fff7ed;
+    color: #c2410c;
+}
+
+.status-badge.approved {
+    background-color: #f0fdf4;
+    color: #15803d;
+}
+
+.status-badge.rejected {
+    background-color: #fef2f2;
+    color: #b91c1c;
+}
+
+.action-btn {
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin-right: 0.5rem;
+    cursor: pointer;
+    border: 1px solid transparent;
+}
+
+.action-btn.approve {
+    background-color: #dcfce7;
+    color: #166534;
+}
+
+.action-btn.reject {
+    background-color: #fee2e2;
+    color: #991b1b;
+}
+
+.leave-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.stats-card {
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.stats-card h3 {
+    margin: 0 0 1rem 0;
+    font-size: 1rem;
+    color: #64748b;
+}
+
+.stats-number {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #0f172a;
+}

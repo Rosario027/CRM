@@ -1,0 +1,250 @@
+/* Dashboard.css */
+.dashboard-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    width: 100%;
+    max-width: none;
+    /* Explicitly remove any max-width */
+}
+
+.welcome-banner h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #1a2e26;
+    margin-bottom: 0.5rem;
+}
+
+.welcome-banner p {
+    color: #5c7a6f;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+    width: 100%;
+}
+
+.stat-card {
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 16px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    transition: transform 0.2s;
+}
+
+.stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.stat-icon {
+    padding: 0.75rem;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.stat-icon.blue {
+    background-color: #eff6ff;
+    color: #3b82f6;
+}
+
+.stat-icon.green {
+    background-color: #f0fdf4;
+    color: #16a34a;
+}
+
+.stat-icon.purple {
+    background-color: #faf5ff;
+    color: #9333ea;
+}
+
+.stat-icon.orange {
+    background-color: #fff7ed;
+    color: #ea580c;
+}
+
+.stat-info h3 {
+    font-size: 0.875rem;
+    color: #6b7280;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+.stat-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 0.25rem;
+}
+
+.stat-trend {
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.stat-trend.positive {
+    color: #16a34a;
+}
+
+.stat-trend.negative {
+    color: #dc2626;
+}
+
+.stat-trend.neutral {
+    color: #6b7280;
+}
+
+.section-card {
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 16px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.section-card h3 {
+    font-size: 1.1rem;
+    color: #1a2e26;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #f3f4f6;
+    padding-bottom: 1rem;
+}
+
+.empty-state {
+    color: #9ca3af;
+    font-style: italic;
+    text-align: center;
+    padding: 2rem;
+}
+
+/* === Pending Tasks Breakdown Panel === */
+.pending-tasks-panel {
+    background-color: white;
+    border-radius: 16px;
+    padding: 1.5rem 2rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    margin-bottom: 1rem;
+}
+
+.panel-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #1a2e26;
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.priority-rows {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.priority-row {
+    display: flex;
+    align-items: center;
+    padding: 1rem 1.25rem;
+    border-radius: 12px;
+    transition: transform 0.15s, box-shadow 0.15s;
+    cursor: pointer;
+    user-select: none;
+}
+
+.priority-row:hover {
+    transform: translateX(4px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.high-row {
+    background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+    border-left: 5px solid #ef4444;
+}
+
+.medium-row {
+    background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+    border-left: 5px solid #f59e0b;
+}
+
+.low-row {
+    background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+    border-left: 5px solid #3b82f6;
+}
+
+.priority-indicator {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    margin-right: 1rem;
+    flex-shrink: 0;
+}
+
+.high-indicator {
+    background-color: #ef4444;
+    box-shadow: 0 0 6px rgba(239, 68, 68, 0.5);
+}
+
+.medium-indicator {
+    background-color: #f59e0b;
+    box-shadow: 0 0 6px rgba(245, 158, 11, 0.5);
+}
+
+.low-indicator {
+    background-color: #3b82f6;
+    box-shadow: 0 0 6px rgba(59, 130, 246, 0.5);
+}
+
+.priority-label {
+    font-size: 1rem;
+    font-weight: 600;
+    flex: 1;
+}
+
+.high-row .priority-label {
+    color: #b91c1c;
+}
+
+.medium-row .priority-label {
+    color: #b45309;
+}
+
+.low-row .priority-label {
+    color: #1d4ed8;
+}
+
+.priority-count {
+    font-size: 1.5rem;
+    font-weight: 800;
+    min-width: 40px;
+    text-align: right;
+}
+
+.high-row .priority-count {
+    color: #dc2626;
+}
+
+.medium-row .priority-count {
+    color: #d97706;
+}
+
+.low-row .priority-count {
+    color: #2563eb;
+}
+
+.priority-arrow {
+    font-size: 1.2rem;
+    margin-left: 0.75rem;
+    opacity: 0.4;
+    transition: opacity 0.15s, transform 0.15s;
+}
+
+.priority-row:hover .priority-arrow {
+    opacity: 1;
+    transform: translateX(4px);
+}

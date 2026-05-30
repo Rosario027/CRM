@@ -1,0 +1,56 @@
+/* Health Insurance Module Styles */
+
+.members-grid {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.member-card {
+    background: #f7f8fa;
+    border-radius: 8px;
+    padding: 1rem;
+    border: 1px solid #eee;
+    min-width: 160px;
+    flex: 1;
+    max-width: 200px;
+}
+
+.member-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.member-header select {
+    font-weight: 700;
+    font-size: 0.875rem;
+    color: #1a1a2e;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 4px 8px;
+    flex: 1;
+}
+
+.health-plan-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
+    margin-top: 8px;
+}
+
+.hplan-section {
+    background: #f7f8fa;
+    border-radius: 8px;
+    padding: 12px;
+    border: 1px solid #eee;
+}
+
+.hplan-section h5 {
+    margin: 0 0 10px 0;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #888;
+}

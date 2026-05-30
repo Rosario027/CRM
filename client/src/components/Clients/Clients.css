@@ -1,0 +1,198 @@
+/* Clients.css */
+.clients-container {
+    padding: 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.clients-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.clients-header h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #1a2e26;
+    /* Dark Green */
+    margin: 0;
+}
+
+.clients-header p {
+    color: #5c7a6f;
+    margin: 0.5rem 0 0;
+}
+
+.add-client-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: #10b981;
+    /* Green-500 */
+    color: white;
+    padding: 0.75rem 1.25rem;
+    border-radius: 8px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.add-client-btn:hover {
+    background-color: #059669;
+    /* Green-600 */
+    transform: translateY(-1px);
+}
+
+.clients-grid {
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+}
+
+.clients-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.clients-table th {
+    text-align: left;
+    padding: 1rem 1.5rem;
+    background-color: #f8fafc;
+    color: #64748b;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.clients-table td {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid #f1f5f9;
+    color: #334155;
+    font-size: 0.95rem;
+}
+
+.clients-table tr:last-child td {
+    border-bottom: none;
+}
+
+.status-badge {
+    padding: 0.25rem 0.6rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.status-badge.active {
+    background-color: #d1fae5;
+    color: #065f46;
+}
+
+.status-badge.inactive {
+    background-color: #f3f4f6;
+    color: #6b7280;
+}
+
+.client-actions button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #ef4444;
+    /* Red for delete */
+    padding: 4px;
+    border-radius: 4px;
+    transition: background 0.2s;
+}
+
+.client-actions button:hover {
+    background-color: #fee2e2;
+}
+
+/* Summary Cards */
+.clients-summary-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.summary-card {
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 16px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    border: 1px solid #f1f5f9;
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+}
+
+.summary-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.summary-card.active-filter {
+    border-color: #10b981;
+    background-color: #f0fdf4;
+}
+
+.summary-card h3 {
+    font-size: 0.9rem;
+    color: #64748b;
+    margin: 0 0 0.5rem 0;
+    font-weight: 600;
+}
+
+.summary-card .count {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1a2e26;
+    margin: 0;
+}
+
+.summary-card .label {
+    font-size: 0.8rem;
+    color: #94a3b8;
+    margin-top: 0.25rem;
+}
+
+/* Status colors for cards */
+.summary-card.status-active .count {
+    color: #10b981;
+}
+
+.summary-card.status-renewal .count {
+    color: #f59e0b;
+}
+
+.summary-card.status-lead .count {
+    color: #3b82f6;
+}
+
+.summary-card.status-pitch .count {
+    color: #8b5cf6;
+}
+
+.summary-card.status-inactive .count {
+    color: #94a3b8;
+}
+
+/* Status Badges */
+.status-badge.renewal {
+    background-color: #fff7ed;
+    color: #c2410c;
+}
+
+.status-badge.lead {
+    background-color: #eff6ff;
+    color: #1d4ed8;
+}
+
+.status-badge.pitch {
+    background-color: #f5f3ff;
+    color: #7c3aed;
+}
