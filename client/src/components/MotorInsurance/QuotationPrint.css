@@ -10,6 +10,14 @@
     margin: 0 auto;
 }
 
+/* NEWERA logo in print */
+.newera-logo-print {
+    height: 48px;
+    width: auto;
+    display: block;
+    margin-left: auto;
+}
+
 /* Header */
 .qprint-header {
     display: flex;
@@ -34,29 +42,6 @@
 .cinfo-value {
     font-weight: 700;
     color: #000;
-}
-
-.brand-logo-print {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    justify-content: flex-end;
-}
-
-.brand-icon-print {
-    font-size: 22px;
-}
-
-.brand-name-print {
-    font-size: 20px;
-    font-weight: 900;
-    color: #1a5c3a;
-    letter-spacing: 1px;
-}
-
-.brand-tagline-print {
-    font-size: 9px;
-    color: #555;
 }
 
 .brand-url-print {
@@ -97,6 +82,20 @@
     color: #333;
     font-size: 9px;
     white-space: nowrap;
+}
+
+/* Insurer logo header cell */
+.insurer-logo-header {
+    padding: 4px 3px !important;
+    text-align: center;
+    vertical-align: middle;
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+}
+
+.insurer-logo-header svg {
+    display: block;
+    margin: 0 auto;
 }
 
 .insurer-header {

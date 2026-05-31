@@ -1,30 +1,10 @@
 import React from 'react';
 import type { MotorQuotationData, MotorPack } from './MotorQuotation';
+import InsurerLogo from '../../assets/insurers/InsurerLogo';
+import neweraLogo from '../../assets/new-era-icon.png';
 import './QuotationPrint.css';
 
 interface Props { data: MotorQuotationData; }
-
-const INSURER_COLORS: Record<string, { bg: string; color: string }> = {
-    'RELIANCE GENERAL INSURANCE': { bg: '#003087', color: '#fff' },
-    'ROYAL SUNDARAM INSURANCE': { bg: '#e31837', color: '#fff' },
-    'ICICI LOMBARD': { bg: '#ee3124', color: '#fff' },
-    'TATA AIG': { bg: '#002f6c', color: '#fff' },
-    'IndusInd General Insurance': { bg: '#5c2d91', color: '#fff' },
-    'Bajaj Allianz': { bg: '#003087', color: '#fff' },
-    'HDFC ERGO': { bg: '#e31837', color: '#fff' },
-    'New India Assurance': { bg: '#006400', color: '#fff' },
-    'Oriental Insurance': { bg: '#ff6600', color: '#fff' },
-    'United India Insurance': { bg: '#003087', color: '#fff' },
-    'National Insurance': { bg: '#006400', color: '#fff' },
-    'SBI General': { bg: '#003087', color: '#fff' },
-    'Kotak General': { bg: '#e31837', color: '#fff' },
-    'IFFCO Tokio': { bg: '#ff6600', color: '#fff' },
-    'Digit Insurance': { bg: '#3d348b', color: '#fff' },
-    'Acko General': { bg: '#2d3be0', color: '#fff' },
-    'Zurich Kotak': { bg: '#1a5276', color: '#fff' },
-};
-
-const getColor = (name: string) => INSURER_COLORS[name] || { bg: '#555', color: '#fff' };
 
 const fmtAmt = (v?: string): string => {
     if (!v || v === '' || v === '0') return '-';
@@ -41,24 +21,24 @@ const cellVal = (pack: MotorPack, val: string, inclFlag: boolean): React.ReactNo
 };
 
 const ROWS: { key: keyof MotorPack; inclKey?: keyof MotorPack; label: string; section?: string; bold?: boolean; highlight?: boolean }[] = [
-    { key: 'idv', label: 'Insurance Cover / IDV', bold: true },
-    { key: 'od', inclKey: 'odIncluded', label: 'Own Damage Insurance (OD)' },
-    { key: 'rsa', label: 'Road Side Assistance (RSA)' },
-    { key: 'ema', label: 'Emergency Medical Assist (EMA)' },
-    { key: 'zeroDep', inclKey: 'zeroDeptIncluded', label: 'Zero Depr Cover', section: 'ADD ON Covers' },
-    { key: 'consumables', inclKey: 'consumablesIncluded', label: 'Consumables' },
-    { key: 'engineProtect', inclKey: 'engineProtectIncluded', label: 'Engine Protect' },
-    { key: 'tyreProtect', label: 'Tyre Protect' },
-    { key: 'keyReplacement', inclKey: 'keyReplacementIncluded', label: 'Key Replacement' },
+    { key: 'idv',              label: 'Insurance Cover / IDV',        bold: true },
+    { key: 'od',               inclKey: 'odIncluded',            label: 'Own Damage Insurance (OD)' },
+    { key: 'rsa',              label: 'Road Side Assistance (RSA)' },
+    { key: 'ema',              label: 'Emergency Medical Assist (EMA)' },
+    { key: 'zeroDep',          inclKey: 'zeroDeptIncluded',      label: 'Zero Depr Cover',           section: 'ADD ON Covers' },
+    { key: 'consumables',      inclKey: 'consumablesIncluded',   label: 'Consumables' },
+    { key: 'engineProtect',    inclKey: 'engineProtectIncluded', label: 'Engine Protect' },
+    { key: 'tyreProtect',      label: 'Tyre Protect' },
+    { key: 'keyReplacement',   inclKey: 'keyReplacementIncluded', label: 'Key Replacement' },
     { key: 'lossOfBelongings', inclKey: 'lossOfBelongingsIncluded', label: 'Loss of Personal Belongings' },
-    { key: 'returnToInvoice', label: 'Return to Invoice' },
-    { key: 'ncbProtect', label: 'NCB Protect' },
-    { key: 'windshieldProtect', label: 'Windshield Protect (max 2)' },
-    { key: 'imt23', inclKey: 'imt23Included', label: 'IMT 23' },
+    { key: 'returnToInvoice',  label: 'Return to Invoice' },
+    { key: 'ncbProtect',       label: 'NCB Protect' },
+    { key: 'windshieldProtect',label: 'Windshield Protect (max 2)' },
+    { key: 'imt23',            inclKey: 'imt23Included',         label: 'IMT 23' },
     { key: 'additionalTowing', label: 'Additional Towing' },
-    { key: 'paAndTp', label: 'PA cover + TP / Legal liability' },
-    { key: 'gst', label: 'GST' },
-    { key: 'totalPremium', label: 'Total Premium', bold: true, highlight: true },
+    { key: 'paAndTp',          label: 'PA cover + TP / Legal liability' },
+    { key: 'gst',              label: 'GST' },
+    { key: 'totalPremium',     label: 'Total Premium',            bold: true, highlight: true },
 ];
 
 const MotorQuotationPrint: React.FC<Props> = ({ data }) => {
@@ -67,69 +47,57 @@ const MotorQuotationPrint: React.FC<Props> = ({ data }) => {
         return new Date(d).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
     };
 
-    // Build columns: each pack of each insurer
     const columns: { insurer: string; pack: MotorPack }[] = [];
-    data.insurers.forEach(ins => {
-        ins.packs.forEach(pack => {
-            columns.push({ insurer: ins.name, pack });
-        });
-    });
+    data.insurers.forEach(ins => ins.packs.forEach(pack => columns.push({ insurer: ins.name, pack })));
 
-    // Group columns by insurer for header spanning
     const insurerGroups: { name: string; count: number }[] = [];
-    data.insurers.forEach(ins => {
-        insurerGroups.push({ name: ins.name, count: ins.packs.length });
-    });
+    data.insurers.forEach(ins => insurerGroups.push({ name: ins.name, count: ins.packs.length }));
 
-    let sectionShown = new Set<string>();
+    const sectionShown = new Set<string>();
 
     return (
         <div className="quotation-print motor-quotation-print">
-            {/* Header */}
+
+            {/* ── Header ── */}
             <div className="qprint-header">
                 <div className="qprint-customer-info">
                     <table className="customer-table">
                         <tbody>
                             <tr><td className="cinfo-label">Customer</td><td className="cinfo-value">{data.customerName}</td></tr>
-                            <tr><td className="cinfo-label">Reg No</td><td className="cinfo-value">{data.regNo}</td></tr>
+                            <tr><td className="cinfo-label">Reg No</td>  <td className="cinfo-value">{data.regNo}</td></tr>
                             <tr><td className="cinfo-label">Due Date</td><td className="cinfo-value">{formatDate(data.dueDate)}</td></tr>
-                            <tr><td className="cinfo-label">Vehicle</td><td className="cinfo-value">{data.vehicleMake} {data.vehicleModel}</td></tr>
+                            <tr><td className="cinfo-label">Vehicle</td> <td className="cinfo-value">{data.vehicleMake} {data.vehicleModel}</td></tr>
                         </tbody>
                     </table>
                 </div>
+
+                {/* NEWERA brand — real logo image */}
                 <div className="qprint-brand">
-                    <div className="brand-logo-print">
-                        <span className="brand-icon-print">🌿</span>
-                        <div>
-                            <div className="brand-name-print">NEWERA</div>
-                            <div className="brand-tagline-print">Insure to Secure</div>
-                        </div>
-                    </div>
+                    <img src={neweraLogo} alt="NEWERA" className="newera-logo-print" />
                     <div className="brand-url-print">https://isecurenow.com/</div>
                 </div>
             </div>
 
-            {/* Quotation Table */}
+            {/* ── Quotation Table ── */}
             <table className="qprint-table">
                 <thead>
-                    {/* Insurer name row */}
+                    {/* Row 1: insurer logos */}
                     <tr>
                         <th className="row-label-header"></th>
-                        {insurerGroups.map((g, i) => {
-                            const color = getColor(g.name);
-                            return (
-                                <th key={i} colSpan={g.count} className="insurer-header" style={{ background: color.bg, color: color.color }}>
-                                    {g.name}
-                                </th>
-                            );
-                        })}
+                        {insurerGroups.map((g, i) => (
+                            <th key={i} colSpan={g.count} className="insurer-logo-header">
+                                <InsurerLogo name={g.name} width={100} height={34} forPrint />
+                            </th>
+                        ))}
                     </tr>
-                    {/* Pack name row */}
+                    {/* Row 2: pack names */}
                     <tr>
                         <th className="row-label-header"></th>
                         {columns.map((col, i) => (
                             <th key={i} className="pack-header-cell">
-                                {col.pack.declined ? <span style={{ color: '#e53e3e', fontWeight: 700 }}>Declined</span> : col.pack.name}
+                                {col.pack.declined
+                                    ? <span style={{ color: '#e53e3e', fontWeight: 700 }}>Declined</span>
+                                    : col.pack.name}
                             </th>
                         ))}
                     </tr>
@@ -149,7 +117,11 @@ const MotorQuotationPrint: React.FC<Props> = ({ data }) => {
                                     <td className="row-label">{row.label}</td>
                                     {columns.map((col, cIdx) => (
                                         <td key={cIdx} className={`data-cell ${row.highlight ? 'total-cell' : ''}`}>
-                                            {col.pack.declined ? '-' : cellVal(col.pack, col.pack[row.key] as string, row.inclKey ? col.pack[row.inclKey] as boolean : false)}
+                                            {col.pack.declined ? '-' : cellVal(
+                                                col.pack,
+                                                col.pack[row.key] as string,
+                                                row.inclKey ? col.pack[row.inclKey] as boolean : false
+                                            )}
                                         </td>
                                     ))}
                                 </tr>
@@ -159,9 +131,7 @@ const MotorQuotationPrint: React.FC<Props> = ({ data }) => {
                 </tbody>
             </table>
 
-            <div className="qprint-footer">
-                IRDA License no: IMF06740320230589
-            </div>
+            <div className="qprint-footer">IRDA License no: IMF06740320230589</div>
         </div>
     );
 };
