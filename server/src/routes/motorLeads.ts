@@ -60,7 +60,7 @@ router.post('/', async (req: Request, res: Response): Promise<void> => {
 router.put('/:id', async (req: Request, res: Response): Promise<void> => {
     if (!isDbConnected) { res.status(503).json({ error: 'DB not connected' }); return; }
     try {
-        const id = parseInt(req.params.id);
+        const id = parseInt(req.params.id as string);
         const data = req.body;
         const [lead] = await db.update(motorLeads).set({
             source: data.source,
@@ -100,7 +100,7 @@ router.put('/:id', async (req: Request, res: Response): Promise<void> => {
 router.delete('/:id', async (req: Request, res: Response): Promise<void> => {
     if (!isDbConnected) { res.status(503).json({ error: 'DB not connected' }); return; }
     try {
-        const id = parseInt(req.params.id);
+        const id = parseInt(req.params.id as string);
         await db.delete(motorLeads).where(eq(motorLeads.id, id));
         res.json({ success: true });
     } catch (err) {

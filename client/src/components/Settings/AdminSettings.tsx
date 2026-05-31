@@ -13,7 +13,7 @@ interface CustomField {
 
 interface Props { userRole: string; }
 
-const AdminSettings: React.FC<Props> = ({ userRole }) => {
+const AdminSettings: React.FC<Props> = ({ userRole: _userRole }) => {
     const [fields, setFields] = useState<CustomField[]>([]);
     const [saving, setSaving] = useState<number | null>(null);
     const [saved, setSaved] = useState<Set<number>>(new Set());

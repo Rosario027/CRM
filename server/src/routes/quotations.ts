@@ -21,7 +21,7 @@ router.get('/', async (req: Request, res: Response): Promise<void> => {
 router.get('/:id', async (req: Request, res: Response): Promise<void> => {
     if (!isDbConnected) { res.status(503).json({ error: 'DB not connected' }); return; }
     try {
-        const id = parseInt(req.params.id);
+        const id = parseInt(req.params.id as string);
         const [q] = await db.select().from(quotations).where(eq(quotations.id, id));
         if (!q) { res.status(404).json({ error: 'Not found' }); return; }
         res.json(q);
@@ -54,7 +54,7 @@ router.post('/', async (req: Request, res: Response): Promise<void> => {
 router.delete('/:id', async (req: Request, res: Response): Promise<void> => {
     if (!isDbConnected) { res.status(503).json({ error: 'DB not connected' }); return; }
     try {
-        const id = parseInt(req.params.id);
+        const id = parseInt(req.params.id as string);
         await db.delete(quotations).where(eq(quotations.id, id));
         res.json({ success: true });
     } catch (err) {

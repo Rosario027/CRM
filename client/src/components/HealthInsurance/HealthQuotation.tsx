@@ -64,7 +64,7 @@ const emptyData = (): HealthQuotationData => ({
 
 interface Props { userRole: string; }
 
-const HealthQuotation: React.FC<Props> = ({ userRole }) => {
+const HealthQuotation: React.FC<Props> = ({ userRole: _userRole }) => {
     const [data, setData] = useState<HealthQuotationData>(emptyData());
     const [showPrint, setShowPrint] = useState(false);
     const [saveMsg, setSaveMsg] = useState('');

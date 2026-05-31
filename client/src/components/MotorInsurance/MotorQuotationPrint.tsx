@@ -1,5 +1,5 @@
 import React from 'react';
-import { MotorQuotationData, MotorPack } from './MotorQuotation';
+import type { MotorQuotationData, MotorPack } from './MotorQuotation';
 import './QuotationPrint.css';
 
 interface Props { data: MotorQuotationData; }

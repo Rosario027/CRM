@@ -45,7 +45,7 @@ router.get('/', async (req: Request, res: Response): Promise<void> => {
 router.put('/:id', async (req: Request, res: Response): Promise<void> => {
     if (!isDbConnected) { res.status(503).json({ error: 'DB not connected' }); return; }
     try {
-        const id = parseInt(req.params.id);
+        const id = parseInt(req.params.id as string);
         const { label, isEnabled, fieldType } = req.body;
         const [field] = await db.update(adminCustomFields).set({
             label,

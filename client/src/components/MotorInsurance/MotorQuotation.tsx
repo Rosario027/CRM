@@ -76,7 +76,7 @@ const emptyQuotation = (): MotorQuotationData => ({
 
 interface Props { userRole: string; }
 
-const MotorQuotation: React.FC<Props> = ({ userRole }) => {
+const MotorQuotation: React.FC<Props> = ({ userRole: _userRole }) => {
     const [data, setData] = useState<MotorQuotationData>(emptyQuotation());
     const [showPrint, setShowPrint] = useState(false);
     const [saveMsg, setSaveMsg] = useState('');

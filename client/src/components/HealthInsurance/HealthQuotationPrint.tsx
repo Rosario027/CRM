@@ -1,5 +1,5 @@
 import React from 'react';
-import { HealthQuotationData, FamilyMember, HealthPlan } from './HealthQuotation';
+import type { HealthQuotationData, HealthPlan } from './HealthQuotation';
 import '../MotorInsurance/QuotationPrint.css';
 import './HealthInsurance.css';
 
@@ -25,12 +25,6 @@ const fmtDate = (d?: string) => {
     return dt.toLocaleDateString('en-IN', { day: '2-digit', month: '2-digit', year: 'numeric' });
 };
 
-const calcAge = (dob?: string): string => {
-    if (!dob) return '';
-    const birth = new Date(dob);
-    const now = new Date();
-    return String(now.getFullYear() - birth.getFullYear());
-};
 
 const FEATURE_ROWS: { key: keyof HealthPlan; label: string; highlight?: boolean; greenHighlight?: boolean }[] = [
     { key: 'healthCheckup', label: 'Health checkup for family' },

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { X } from 'lucide-react';
-import { MotorLead, CustomFieldConfig } from './MotorLeadList';
+import type { MotorLead, CustomFieldConfig } from './MotorLeadList';
 import { initialBrands } from '../../utils/motorBrands';
 import { initialModels } from '../../utils/motorModels';
 

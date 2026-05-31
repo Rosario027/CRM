@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Plus, Edit2, Trash2, Car, FileText, Search, Filter } from 'lucide-react';
+import { Plus, Edit2, Trash2, Car, Search, Filter } from 'lucide-react';
 import MotorLeadForm from './MotorLeadForm';
 import './MotorInsurance.css';
 
